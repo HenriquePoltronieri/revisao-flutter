@@ -83,7 +83,6 @@
     border-radius: 99px;
   }
 
-  /* ---------- seletor de modo ---------- */
   .modos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
   @media (max-width: 560px) { .modos { grid-template-columns: 1fr; } }
   .modo {
@@ -290,13 +289,13 @@
       tema: "Scaffold",
       pergunta: "O que é o <code>Scaffold</code> no Flutter?",
       opcoes: [
-        "Um widget que fornece a estrutura básica de uma tela Material Design, com espaços para AppBar, body, FloatingActionButton etc.",
-        "Uma função que compila o código Dart.",
-        "Um banco de dados local do Flutter.",
-        "Um pacote externo que precisa ser instalado com <code>pub add</code>."
+        "A estrutura base de uma tela Material, com espaços para AppBar, body e botões.",
+        "O motor que compila o código Dart para nativo em cada plataforma.",
+        "O banco de dados local usado para salvar os pedidos do aplicativo.",
+        "Um pacote externo de layout que precisa ser instalado via <code>pub add</code>."
       ],
       correta: 0,
-      explicacao: "O <code>Scaffold</code> é o \"esqueleto\" da tela: AppBar em cima, body no meio, FAB, Drawer etc."
+      explicacao: "O <code>Scaffold</code> é o \"esqueleto\" da tela: AppBar em cima, body no meio, FloatingActionButton, Drawer etc. Já vem no Flutter, não é pacote externo."
     },
     {
       tema: "Scaffold",
@@ -308,43 +307,43 @@
         "<code>child</code>"
       ],
       correta: 1,
-      explicacao: "O conteúdo principal vai no <code>body</code>. <code>appBar</code> é a barra do topo e <code>home</code> é do <code>MaterialApp</code>."
+      explicacao: "O conteúdo principal vai no <code>body</code>. <code>appBar</code> é a barra do topo e <code>home</code> pertence ao <code>MaterialApp</code>."
     },
     {
       tema: "Stateless × Stateful",
       pergunta: "Você precisa de uma tela com um contador que muda quando o usuário aperta um botão. Qual tipo de widget usar?",
       opcoes: [
-        "<code>StatelessWidget</code>, porque é mais simples.",
-        "<code>StatefulWidget</code>, porque a tela precisa mudar de estado (o valor do contador) durante a execução.",
-        "Nenhum, contadores não existem em Flutter.",
-        "<code>Scaffold</code>, que já vem com contador embutido."
+        "<code>StatelessWidget</code>, porque telas simples nunca precisam de estado.",
+        "<code>StatefulWidget</code>, porque o valor do contador muda durante a execução.",
+        "<code>Scaffold</code>, que já vem com controle de estado embutido por padrão.",
+        "<code>MaterialApp</code>, que gerencia o estado de todos os widgets filhos."
       ],
       correta: 1,
-      explicacao: "Se algo na tela muda com o tempo ou com interação, é <code>StatefulWidget</code>."
+      explicacao: "Se algo na tela muda com o tempo ou com interação, é <code>StatefulWidget</code>. <code>Scaffold</code> e <code>MaterialApp</code> não gerenciam o seu estado."
     },
     {
       tema: "setState",
       pergunta: "De forma simples, o que o <code>setState()</code> faz?",
       opcoes: [
-        "Avisa o Flutter que o estado mudou, fazendo a tela ser redesenhada com os novos valores.",
-        "Salva os dados no celular permanentemente.",
-        "Fecha o aplicativo.",
-        "Cria uma nova tela."
+        "Salva os dados de forma permanente na memória do celular.",
+        "Avisa o Flutter que o estado mudou e a tela deve ser redesenhada.",
+        "Cria uma nova tela e navega automaticamente até ela.",
+        "Reinicia o widget do zero, apagando todas as variáveis."
       ],
-      correta: 0,
-      explicacao: "<code>setState</code> = \"ei Flutter, mudei algo, redesenha a tela\"."
+      correta: 1,
+      explicacao: "<code>setState</code> = \"ei Flutter, mudei algo, redesenha a tela\". Não salva nada em disco nem navega."
     },
     {
       tema: "Navigator",
       pergunta: "Qual comando abre uma nova tela no Flutter?",
       opcoes: [
-        "<code>Navigator.push(context, MaterialPageRoute(builder: (context) =&gt; NovaTela()))</code>",
-        "<code>openScreen(NovaTela())</code>",
-        "<code>setState(NovaTela())</code>",
-        "<code>Scaffold.push(NovaTela())</code>"
+        "<code>Navigator.push(context, MaterialPageRoute(...))</code>",
+        "<code>Scaffold.open(context, NovaTela())</code>",
+        "<code>setState(() =&gt; NovaTela())</code>",
+        "<code>MaterialApp.route(context, NovaTela())</code>"
       ],
       correta: 0,
-      explicacao: "<code>Navigator.push</code> com <code>MaterialPageRoute</code> é a forma padrão de navegar."
+      explicacao: "<code>Navigator.push</code> com <code>MaterialPageRoute</code> é a forma padrão de empilhar uma nova tela."
     },
     {
       tema: "Navigator",
@@ -353,58 +352,58 @@
         "<code>Navigator.pop(context)</code>",
         "<code>Navigator.back(context)</code>",
         "<code>Navigator.return(context)</code>",
-        "<code>context.close()</code>"
+        "<code>Navigator.exit(context)</code>"
       ],
       correta: 0,
-      explicacao: "<code>pop</code> remove a tela atual da pilha e volta para a anterior."
+      explicacao: "<code>pop</code> remove a tela atual da pilha e volta para a anterior. Os outros métodos não existem."
     },
     {
       tema: "TextEditingController",
       pergunta: "Para que serve o <code>TextEditingController</code>?",
       opcoes: [
-        "Para ler e controlar o texto digitado em um <code>TextField</code> (ex.: pegar o nome do cliente com <code>controller.text</code>).",
-        "Para controlar o volume do celular.",
-        "Para editar o código Dart em tempo de execução.",
-        "Para criar animações de texto."
+        "Ler e controlar o texto digitado em um <code>TextField</code>.",
+        "Validar automaticamente e-mails e senhas nos formulários.",
+        "Criar animações de digitação letra por letra na tela.",
+        "Formatar o estilo (cor, fonte, tamanho) dos textos do app."
       ],
       correta: 0,
-      explicacao: "É a ponte entre o campo de texto e o seu código: <code>meuController.text</code> retorna o que foi digitado."
+      explicacao: "É a ponte entre o campo e o código: <code>meuController.text</code> retorna o que foi digitado. Validação e estilo são responsabilidade de outras APIs."
     },
     {
       tema: "SnackBar",
       pergunta: "O que é um <code>SnackBar</code>?",
       opcoes: [
-        "Uma mensagem temporária que aparece na parte de baixo da tela (ex.: \"Pedido enviado!\") e some sozinha.",
-        "Uma barra de rolagem lateral.",
-        "O menu principal do aplicativo.",
-        "Um tipo de botão flutuante."
+        "Uma mensagem temporária que aparece na base da tela e some sozinha.",
+        "Um menu lateral que desliza a partir da borda esquerda da tela.",
+        "Uma barra fixa de navegação exibida no rodapé do aplicativo.",
+        "Um alerta em janela que bloqueia a tela até ser fechado."
       ],
       correta: 0,
-      explicacao: "SnackBar é aquele aviso rápido que sobe na base da tela e desaparece depois de alguns segundos."
+      explicacao: "SnackBar é o aviso rápido da base da tela (ex.: \"Pedido enviado!\"). Menu lateral é o <code>Drawer</code>; alerta bloqueante é o <code>AlertDialog</code>."
     },
     {
       tema: "ListView",
       pergunta: "Qual widget é o mais indicado para exibir uma lista rolável de produtos do cardápio?",
       opcoes: [
-        "<code>ListView</code>",
-        "<code>Text</code>",
-        "<code>AppBar</code>",
-        "<code>FloatingActionButton</code>"
+        "<code>ListView</code>, feito para exibir itens em lista com rolagem.",
+        "<code>Row</code>, que organiza os produtos lado a lado na horizontal.",
+        "<code>Stack</code>, que empilha os produtos um sobre o outro.",
+        "<code>AppBar</code>, que exibe os itens na barra superior da tela."
       ],
       correta: 0,
-      explicacao: "<code>ListView</code> exibe itens em lista com rolagem automática."
+      explicacao: "<code>ListView</code> já vem com rolagem vertical automática — é o widget clássico de listas."
     },
     {
       tema: "BottomSheet",
       pergunta: "O que o <code>showModalBottomSheet</code> faz?",
       opcoes: [
-        "Abre um painel que desliza de baixo para cima na tela (ex.: detalhes do pedido), bloqueando o conteúdo atrás até ser fechado.",
-        "Mostra uma barra de navegação fixa no rodapé.",
-        "Reinicia o aplicativo.",
-        "Exibe uma imagem em tela cheia."
+        "Abre um painel que desliza de baixo para cima sobre a tela atual.",
+        "Fixa uma barra de menu permanente no rodapé do aplicativo.",
+        "Abre uma nova tela cheia por cima da tela atual.",
+        "Exibe uma notificação no sistema operacional do celular."
       ],
       correta: 0,
-      explicacao: "É aquele painel deslizante da parte de baixo, muito usado pra confirmações e detalhes."
+      explicacao: "É o painel deslizante da parte de baixo, muito usado pra detalhes e confirmações. Barra fixa no rodapé é o <code>BottomNavigationBar</code>."
     }
   ];
 
@@ -414,22 +413,22 @@
       tema: "Stateful · estrutura",
       pergunta: "Em um <code>StatefulWidget</code>, onde as variáveis de estado (ex.: <code>int total = 0;</code>) devem ser declaradas?",
       opcoes: [
-        "Na classe que estende <code>State</code> (ex.: <code>_MinhaTelaState</code>), pois é ela que persiste entre os rebuilds.",
-        "Na classe que estende <code>StatefulWidget</code>, pois é ela que representa a tela.",
-        "Dentro do método <code>build()</code>, para serem recriadas a cada frame.",
-        "No arquivo <code>pubspec.yaml</code>."
+        "Na classe que estende <code>State</code>, que persiste entre os rebuilds.",
+        "Na classe que estende <code>StatefulWidget</code>, que representa a tela.",
+        "Dentro do <code>build()</code>, para serem recriadas a cada frame.",
+        "No <code>main()</code>, para ficarem acessíveis de qualquer tela."
       ],
       correta: 0,
-      explicacao: "O widget é recriado a cada rebuild; o objeto <code>State</code> permanece — por isso o estado mora nele. Declarar dentro do <code>build()</code> zeraria o valor a cada redesenho."
+      explicacao: "O widget é recriado a cada rebuild; o objeto <code>State</code> permanece — por isso o estado mora nele. Dentro do <code>build()</code> a variável zeraria a cada redesenho."
     },
     {
       tema: "setState",
       pergunta: "Um aluno fez <code>total++;</code> no <code>onPressed</code> do botão, mas <b>sem</b> chamar <code>setState</code>. O que acontece?",
       opcoes: [
-        "A variável <code>total</code> muda na memória, mas a tela não atualiza, pois o <code>build()</code> não é executado de novo.",
-        "O app trava com exceção.",
-        "A tela atualiza normalmente, <code>setState</code> é opcional.",
-        "O valor de <code>total</code> nem chega a mudar."
+        "A variável muda na memória, mas a tela não é redesenhada.",
+        "O app lança uma exceção de estado inválido no console.",
+        "A tela atualiza normalmente, pois <code>setState</code> é opcional.",
+        "O valor nem chega a mudar, pois o <code>State</code> é imutável."
       ],
       correta: 0,
       explicacao: "Sem <code>setState</code>, o Flutter não sabe que precisa redesenhar — o valor muda \"por dentro\" mas a UI fica congelada no valor antigo."
@@ -438,97 +437,97 @@
       tema: "Navigator · dados",
       pergunta: "Qual a forma mais comum de <b>enviar</b> dados (ex.: o produto escolhido) para a próxima tela?",
       opcoes: [
-        "Passando pelo construtor da tela de destino: <code>MaterialPageRoute(builder: (context) =&gt; Detalhes(produto: p))</code>.",
-        "Usando <code>Navigator.pop</code> antes do <code>push</code>.",
-        "Gravando em um arquivo .txt e lendo na outra tela.",
-        "Não é possível passar dados entre telas no Flutter."
+        "Passando pelo construtor da tela de destino no <code>MaterialPageRoute</code>.",
+        "Chamando <code>Navigator.pop</code> com o dado antes de dar o <code>push</code>.",
+        "Salvando em <code>SharedPreferences</code> e lendo na tela seguinte.",
+        "Usando <code>setState</code> na tela de destino antes de abri-la."
       ],
       correta: 0,
-      explicacao: "A tela de destino recebe os dados como parâmetro do construtor — o jeito mais direto e comum."
+      explicacao: "A tela de destino recebe os dados como parâmetro do construtor: <code>Detalhes(produto: p)</code>. É o jeito mais direto e comum."
     },
     {
       tema: "Navigator · retorno",
       pergunta: "A tela de detalhes fecha com <code>Navigator.pop(context, \"confirmado\")</code>. O que a string <code>\"confirmado\"</code> representa?",
       opcoes: [
-        "É o valor devolvido para a tela anterior, que pode capturá-lo com <code>await</code> no <code>Navigator.push</code>.",
-        "É o nome da rota que será fechada.",
-        "É o título da próxima tela.",
-        "Não representa nada, <code>pop</code> ignora o segundo argumento."
+        "O valor devolvido à tela anterior, capturado com <code>await</code> no <code>push</code>.",
+        "O nome da rota que será removida da pilha de navegação.",
+        "O título que aparecerá na <code>AppBar</code> da tela anterior.",
+        "Nada: o <code>pop</code> ignora qualquer segundo argumento."
       ],
       correta: 0,
-      explicacao: "O segundo argumento do <code>pop</code> vira o resultado do <code>Future</code> retornado pelo <code>push</code>."
+      explicacao: "O segundo argumento do <code>pop</code> vira o resultado do <code>Future</code> retornado pelo <code>push</code>: <code>final r = await Navigator.push(...)</code>."
     },
     {
       tema: "TextEditingController",
       pergunta: "Qual é o par correto de \"onde criar\" e \"onde descartar\" um <code>TextEditingController</code>?",
       opcoes: [
-        "Criar como atributo do <code>State</code> (ou no <code>initState</code>) e descartar no <code>dispose()</code> com <code>controller.dispose()</code>.",
+        "Criar como atributo do <code>State</code> e descartar no <code>dispose()</code>.",
         "Criar dentro do <code>build()</code> e descartar no <code>setState()</code>.",
-        "Criar no <code>main()</code> e nunca descartar.",
-        "Criar no <code>dispose()</code> e descartar no <code>initState()</code>."
+        "Criar no <code>main()</code> e descartar quando o app for fechado.",
+        "Criar no <code>initState()</code> e descartar no próprio <code>build()</code>."
       ],
       correta: 0,
-      explicacao: "Criar no <code>build()</code> recria o controller a cada rebuild (e perde o texto); não descartar causa vazamento de memória."
+      explicacao: "Criar no <code>build()</code> recria o controller a cada rebuild (e perde o texto); não descartar no <code>dispose()</code> causa vazamento de memória."
     },
     {
       tema: "SnackBar",
       pergunta: "Complete: para exibir um SnackBar de \"Pedido enviado!\", o código correto é...",
       opcoes: [
-        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(\"Pedido enviado!\")))</code>",
-        "<code>SnackBar.show(context, \"Pedido enviado!\")</code>",
+        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))</code>",
+        "<code>SnackBar.show(context, Text(\"Pedido enviado!\"))</code>",
         "<code>Navigator.push(context, SnackBar(...))</code>",
         "<code>setState(() =&gt; SnackBar(\"Pedido enviado!\"))</code>"
       ],
       correta: 0,
-      explicacao: "SnackBar se exibe via <code>ScaffoldMessenger.of(context).showSnackBar(...)</code>."
+      explicacao: "SnackBar se exibe via <code>ScaffoldMessenger.of(context).showSnackBar(...)</code> — as outras chamadas não existem ou não fazem sentido."
     },
     {
       tema: "Validação",
       pergunta: "Na tela de pedido, o botão \"Enviar\" só deve funcionar se nome e produto estiverem preenchidos. Qual implementação simples resolve?",
       opcoes: [
-        "No <code>onPressed</code>, checar <code>if (nomeController.text.isEmpty || produtoController.text.isEmpty)</code> e, se vazio, exibir um SnackBar de erro em vez de enviar.",
-        "Deixar enviar sempre e validar depois.",
-        "Usar <code>try/catch</code> ao redor do botão.",
-        "Desabilitar o teclado do usuário."
+        "Checar <code>.text.isEmpty</code> dos controllers e mostrar SnackBar de erro.",
+        "Envolver o botão em <code>try/catch</code> para capturar campos vazios.",
+        "Deixar enviar sempre e fazer a validação somente no servidor.",
+        "Bloquear o teclado do usuário até os campos serem preenchidos."
       ],
       correta: 0,
-      explicacao: "Checar <code>.text.isEmpty</code> dos controllers e dar feedback com SnackBar é a validação básica da atividade."
+      explicacao: "Checar <code>if (nomeController.text.isEmpty || produtoController.text.isEmpty)</code> e dar feedback com SnackBar é a validação básica da atividade. <code>try/catch</code> não captura campo vazio — não há exceção."
     },
     {
       tema: "AnimatedContainer",
       pergunta: "Para o card do produto crescer suavemente ao ser tocado usando <code>AnimatedContainer</code>, o que é necessário?",
       opcoes: [
-        "Definir uma <code>duration</code> e mudar a propriedade (ex.: <code>width</code>) dentro de um <code>setState</code> — o widget anima a transição sozinho.",
-        "Apenas trocar o <code>Container</code> por <code>AnimatedContainer</code>, sem mais nada.",
-        "Criar um <code>AnimationController</code> manualmente, obrigatório em qualquer animação.",
-        "Usar <code>Navigator.push</code> para recarregar a tela."
+        "Definir <code>duration</code> e mudar a propriedade dentro de um <code>setState</code>.",
+        "Só trocar <code>Container</code> por <code>AnimatedContainer</code>, sem mais nada.",
+        "Criar um <code>AnimationController</code> manual, obrigatório em animações.",
+        "Chamar <code>Navigator.push</code> para recarregar a tela com o novo tamanho."
       ],
       correta: 0,
-      explicacao: "<code>AnimatedContainer</code> é animação implícita: mudou a propriedade via <code>setState</code> + tem <code>duration</code>, ele interpola sozinho."
+      explicacao: "<code>AnimatedContainer</code> é animação implícita: mudou a propriedade via <code>setState</code> + tem <code>duration</code>, ele interpola sozinho. <code>AnimationController</code> só é preciso em animações explícitas."
     },
     {
       tema: "Layout · rolagem",
       pergunta: "Sua <code>Column</code> com os produtos ficou maior que a tela e apareceu a faixa amarela e preta de <b>overflow</b>. Qual a solução mais direta?",
       opcoes: [
-        "Envolver a <code>Column</code> em um <code>SingleChildScrollView</code> (ou trocar por <code>ListView</code>) para permitir rolagem.",
-        "Diminuir a fonte de todos os textos até caber.",
-        "Usar dois <code>Scaffold</code>s empilhados.",
-        "Remover o <code>SafeArea</code>."
+        "Envolver a <code>Column</code> em <code>SingleChildScrollView</code> ou usar <code>ListView</code>.",
+        "Diminuir a fonte de todos os textos até o conteúdo caber.",
+        "Trocar a <code>Column</code> por uma <code>Row</code>, que não sofre overflow.",
+        "Adicionar um segundo <code>Scaffold</code> para dividir o conteúdo."
       ],
       correta: 0,
-      explicacao: "Overflow em <code>Column</code> se resolve dando rolagem ao conteúdo: <code>SingleChildScrollView</code> ou <code>ListView</code>."
+      explicacao: "Overflow em <code>Column</code> se resolve dando rolagem ao conteúdo. <code>Row</code> sofre o mesmo problema, só que na horizontal."
     },
     {
       tema: "Widgets personalizados",
       pergunta: "Na atividade, criamos o <code>CardProduto</code> como widget separado em vez de repetir o mesmo código 4 vezes. Qual a principal vantagem?",
       opcoes: [
-        "Reutilização e organização: um único widget parametrizado (nome, preço, imagem) exibe qualquer produto, e mudanças de layout são feitas em um só lugar.",
-        "Widgets separados rodam em outra thread, dobrando a performance.",
-        "É obrigatório: o Flutter não permite repetir widgets.",
-        "Só serve pra deixar o código maior."
+        "Reutilização: um widget parametrizado exibe qualquer produto.",
+        "Performance: widgets separados rodam em threads diferentes.",
+        "Obrigação: o Flutter não permite repetir código de widgets.",
+        "Tamanho: o app final compilado fica menor ao separar arquivos."
       ],
       correta: 0,
-      explicacao: "Componentizar evita duplicação: os dados variam via parâmetros e a manutenção fica centralizada."
+      explicacao: "Componentizar evita duplicação: os dados variam via parâmetros (nome, preço, imagem) e mudanças de layout são feitas em um lugar só."
     }
   ];
 
@@ -538,241 +537,241 @@
       tema: "Scaffold",
       pergunta: "Sobre o <code>Scaffold</code>, qual afirmação está <b>incorreta</b>?",
       opcoes: [
-        "Ele fornece uma estrutura visual padrão do Material Design (AppBar, body, FloatingActionButton, Drawer, BottomNavigationBar).",
-        "É possível ter mais de um <code>Scaffold</code> na árvore de widgets, um aninhado dentro do outro.",
-        "O <code>SnackBar</code> só pode ser exibido através do <code>Scaffold</code> mais próximo, nunca através de um <code>ScaffoldMessenger</code>.",
-        "O <code>Scaffold</code> gerencia automaticamente o espaço reservado para a barra de status e notch (via <code>SafeArea</code> interno em partes do layout)."
+        "Fornece a estrutura visual padrão do Material Design (AppBar, body, FAB, Drawer).",
+        "É possível aninhar mais de um <code>Scaffold</code> na árvore de widgets.",
+        "O <code>SnackBar</code> só pode ser exibido pelo <code>Scaffold</code> mais próximo, nunca por um <code>ScaffoldMessenger</code>.",
+        "Ele reserva automaticamente espaço para barra de status e notch em partes do layout."
       ],
       correta: 2,
-      explicacao: "A afirmação é falsa — o correto é usar <code>ScaffoldMessenger</code>, que independe de um <code>Scaffold</code> específico."
+      explicacao: "A afirmação é falsa — o recomendado é justamente o <code>ScaffoldMessenger</code>, que gerencia SnackBars independente de qual <code>Scaffold</code> está na árvore."
     },
     {
       tema: "setState · ciclo de vida",
-      pergunta: "No trecho abaixo, o que acontece quando o botão é pressionado a primeira vez, considerando o ciclo de vida do widget?<pre>class _ContadorPedidosState extends State&lt;ContadorPedidos&gt; {\n  int total = 0;\n\n  void _incrementar() {\n    total++;\n    setState(() {});\n  }\n}</pre>",
+      pergunta: "No trecho abaixo, o que acontece quando o botão é pressionado a primeira vez?<pre>class _ContadorPedidosState extends State&lt;ContadorPedidos&gt; {\n  int total = 0;\n\n  void _incrementar() {\n    total++;\n    setState(() {});\n  }\n}</pre>",
       opcoes: [
-        "Não compila, pois <code>setState</code> precisa obrigatoriamente receber a alteração de estado dentro do callback.",
-        "Funciona normalmente: o <code>total++</code> já foi executado antes do <code>setState</code>, e o <code>setState({})</code> apenas força o <code>build()</code> a rodar novamente.",
-        "Gera erro em tempo de execução porque <code>total</code> não é uma variável de estado válida.",
-        "O <code>total</code> incrementa, mas a tela nunca reflete a mudança porque o callback do <code>setState</code> está vazio."
+        "Não compila: a alteração de estado deve ficar dentro do callback.",
+        "Funciona: o <code>total++</code> roda antes, e o <code>setState</code> vazio agenda o rebuild.",
+        "Erro em execução: variáveis alteradas fora do callback invalidam o <code>State</code>.",
+        "O <code>total</code> muda, mas a tela não reflete, pois o callback vazio não notifica."
       ],
       correta: 1,
-      explicacao: "<code>total++</code> roda antes do <code>setState</code>; o callback vazio só precisa <i>existir</i> para o Flutter saber que deve reconstruir."
+      explicacao: "O callback do <code>setState</code> só precisa <i>existir</i>; alterar a variável dentro ou fora dele dá no mesmo — o que importa é o agendamento do rebuild."
     },
     {
       tema: "setState",
       pergunta: "Qual é a real função do <code>setState()</code> no Flutter?",
       opcoes: [
-        "Ele persiste o novo valor da variável em um banco local automaticamente.",
-        "Ele marca o widget como \"sujo\" (dirty) e agenda a reconstrução do <code>build()</code> no próximo frame — ele <b>não</b> altera a variável por conta própria.",
-        "Ele impede que o widget pai seja reconstruído, otimizando performance.",
-        "Ele cria uma nova instância do <code>State</code>, descartando a anterior."
+        "Persiste o novo valor automaticamente em armazenamento local.",
+        "Marca o widget como \"sujo\" (dirty) e agenda o rebuild — não altera a variável.",
+        "Bloqueia o rebuild do widget pai para otimizar a performance.",
+        "Descarta o <code>State</code> atual e cria uma nova instância limpa dele."
       ],
       correta: 1,
-      explicacao: "<code>setState</code> não muda dados sozinho, apenas agenda o rebuild."
+      explicacao: "<code>setState</code> não muda dados sozinho: quem altera a variável é o seu código; ele só agenda a reconstrução do <code>build()</code> no próximo frame."
     },
     {
       tema: "Ciclo de vida",
       pergunta: "Chamar <code>setState()</code> dentro do método <code>dispose()</code> de um <code>State</code>:",
       opcoes: [
         "É uma boa prática para garantir a última atualização da tela.",
-        "Lança uma exceção em tempo de execução, pois o widget já foi (ou está sendo) removido da árvore.",
-        "É ignorado silenciosamente pelo Flutter sem qualquer efeito.",
-        "Funciona normalmente, pois <code>dispose()</code> também participa do ciclo de build."
+        "Lança exceção: o widget já foi (ou está sendo) removido da árvore.",
+        "É ignorado silenciosamente pelo framework, sem efeito algum.",
+        "Funciona normalmente, pois <code>dispose()</code> participa do ciclo de build."
       ],
       correta: 1,
-      explicacao: "Chamar <code>setState</code> após/durante <code>dispose()</code> lança exceção."
+      explicacao: "Não existe mais tela para redesenhar — o Flutter lança <code>setState() called after dispose()</code>."
     },
     {
       tema: "setState + async",
       pergunta: "Um aluno escreveu este código e o app \"trava\" com erro no console. Qual é o problema mais provável?<pre>void _fetchDadosAsync() async {\n  await Future.delayed(const Duration(seconds: 3));\n  setState(() { destaque = true; }); // usuário já saiu da tela\n}</pre>",
       opcoes: [
-        "<code>Future.delayed</code> não existe no Flutter.",
-        "O <code>setState</code> é chamado após o widget ter sido desmontado (<code>unmounted</code>), pois o usuário saiu da tela antes dos 3 segundos — deveria verificar <code>if (mounted)</code> antes.",
-        "<code>async</code>/<code>await</code> não pode ser usado dentro de métodos de <code>State</code>.",
-        "O erro é a falta de <code>await</code> antes do <code>setState</code>."
+        "<code>Future.delayed</code> não existe no Flutter, apenas <code>Timer</code>.",
+        "O <code>setState</code> roda após o widget ser desmontado — falta checar <code>if (mounted)</code>.",
+        "<code>async</code>/<code>await</code> não pode ser usado em métodos de um <code>State</code>.",
+        "Falta um <code>await</code> antes do <code>setState</code> para sincronizar o rebuild."
       ],
       correta: 1,
-      explicacao: "Clássico erro de <code>setState() called after dispose()</code> — resolve-se checando <code>mounted</code>."
+      explicacao: "O usuário navegou pra fora antes dos 3 segundos: o widget foi desmontado (<code>unmounted</code>) e o <code>setState</code> tardio explode. Checar <code>mounted</code> resolve."
     },
     {
       tema: "Stateless × Stateful",
       pergunta: "Sobre a diferença entre <code>StatelessWidget</code> e <code>StatefulWidget</code>, marque a alternativa <b>mais precisa</b>:",
       opcoes: [
         "<code>StatelessWidget</code> nunca pode receber parâmetros no construtor.",
-        "A imutabilidade do <code>StatelessWidget</code> é do próprio objeto widget; ele pode disparar rebuilds do pai via callbacks (como <code>VoidCallback aoClicar</code>), mas não guarda estado mutável interno via <code>State</code>.",
-        "<code>StatefulWidget</code> é sempre mais lento, então deve ser evitado sempre que possível.",
+        "A imutabilidade é do objeto widget; ele interage via callbacks, mas sem <code>State</code> interno.",
+        "<code>StatefulWidget</code> é sempre mais lento e deve ser evitado sempre que possível.",
         "Um <code>StatelessWidget</code> não pode conter um <code>StatefulWidget</code> como filho."
       ],
       correta: 1,
-      explicacao: "A imutabilidade é do objeto widget, não impede interação via callbacks."
+      explicacao: "Um <code>StatelessWidget</code> recebe parâmetros e dispara callbacks (como <code>VoidCallback aoClicar</code>) que causam rebuild no pai — o que ele não tem é estado mutável interno via <code>State</code>."
     },
     {
       tema: "Widgets personalizados",
-      pergunta: "No <code>CardProduto</code>, por que é boa prática declarar o construtor como <code>const CardProduto({super.key, required this.nome, ...})</code> sempre que possível?",
+      pergunta: "No <code>CardProduto</code>, por que é boa prática declarar o construtor como <code>const CardProduto({super.key, ...})</code> sempre que possível?",
       opcoes: [
-        "Porque <code>const</code> é obrigatório em qualquer widget personalizado.",
-        "Porque construtores <code>const</code> permitem ao Flutter reutilizar a mesma instância entre rebuilds quando os parâmetros não mudam, evitando reconstruções desnecessárias.",
-        "Porque sem <code>const</code> o widget não aparece na tela.",
-        "Porque <code>const</code> transforma automaticamente o widget em <code>StatefulWidget</code>."
+        "<code>const</code> é obrigatório em qualquer widget personalizado do projeto.",
+        "<code>const</code> permite reutilizar a mesma instância entre rebuilds, evitando reconstruções.",
+        "Sem <code>const</code>, o widget não é renderizado na primeira build.",
+        "<code>const</code> converte o widget automaticamente em <code>StatefulWidget</code> otimizado."
       ],
       correta: 1,
-      explicacao: "<code>const</code> permite reuso de instância e menos rebuilds."
+      explicacao: "Quando os parâmetros não mudam, o Flutter reaproveita a instância <code>const</code> em vez de reconstruí-la — menos trabalho por frame."
     },
     {
       tema: "Navigator",
       pergunta: "Qual é a diferença fundamental entre <code>Navigator.push</code> e <code>Navigator.pushReplacement</code>?",
       opcoes: [
-        "Não há diferença; são sinônimos.",
-        "<code>push</code> empilha a nova rota mantendo a anterior na pilha (dá pra voltar); <code>pushReplacement</code> substitui a rota atual, removendo a anterior (não dá pra voltar).",
-        "<code>pushReplacement</code> só funciona com rotas nomeadas.",
-        "<code>push</code> não aceita passagem de dados, enquanto <code>pushReplacement</code> aceita."
+        "Não há diferença prática; são apenas sinônimos históricos.",
+        "<code>push</code> mantém a rota anterior na pilha; <code>pushReplacement</code> a substitui.",
+        "<code>pushReplacement</code> funciona apenas com rotas nomeadas registradas.",
+        "<code>push</code> não aceita passagem de dados; <code>pushReplacement</code> aceita."
       ],
       correta: 1,
-      explicacao: "<code>push</code> empilha, <code>pushReplacement</code> substitui."
+      explicacao: "Com <code>push</code> dá pra voltar (a anterior segue na pilha); com <code>pushReplacement</code> a rota atual é removida e não há retorno — típico de tela de login → home."
     },
     {
       tema: "Navigator",
       pergunta: "Como capturar um valor retornado pela tela de detalhes quando o usuário volta usando <code>Navigator.pop(context, valor)</code>?",
       opcoes: [
-        "Isso não é possível em Flutter, <code>pop</code> nunca retorna dados.",
-        "Usando <code>await</code> no push: <code>final resultado = await Navigator.push(...)</code>, pois <code>push</code> retorna um <code>Future</code> resolvido com o valor passado ao <code>pop</code>.",
-        "Usando uma variável <code>global</code> obrigatoriamente.",
-        "O valor só pode ser recuperado através de <code>SharedPreferences</code>."
+        "Não é possível: <code>pop</code> nunca retorna dados à tela anterior.",
+        "Com <code>await</code> no <code>push</code>, que retorna um <code>Future</code> resolvido pelo valor do <code>pop</code>.",
+        "Apenas através de uma variável global compartilhada entre as telas.",
+        "Somente persistindo o valor em <code>SharedPreferences</code> antes do <code>pop</code>."
       ],
       correta: 1,
-      explicacao: "<code>push</code> retorna <code>Future</code>, resolvido pelo valor passado ao <code>pop</code>."
+      explicacao: "<code>final resultado = await Navigator.push(...)</code> — o <code>Future</code> do <code>push</code> resolve com o que foi passado ao <code>pop</code>."
     },
     {
       tema: "Navigator",
       pergunta: "Sobre <code>Navigator.pop(context)</code> chamado sem nenhuma tela para voltar (na rota raiz da aplicação):",
       opcoes: [
-        "Fecha a rota raiz normalmente e o app continua rodando em segundo plano.",
-        "Não tem efeito e não gera erro — mas é boa prática checar <code>Navigator.canPop(context)</code> antes, especialmente ao customizar o botão de voltar.",
-        "Gera automaticamente um <code>showModalBottomSheet</code> de confirmação.",
-        "Fecha o aplicativo imediatamente em qualquer plataforma."
+        "Fecha a rota raiz e o app continua rodando em segundo plano.",
+        "Não tem efeito nem erro; boa prática é checar <code>canPop</code> antes.",
+        "Dispara automaticamente um bottom sheet de confirmação de saída.",
+        "Encerra o aplicativo imediatamente em qualquer plataforma."
       ],
       correta: 1,
-      explicacao: "Sem rota para voltar, é seguro checar com <code>canPop</code> antes do <code>pop</code>."
+      explicacao: "Na raiz, o <code>pop</code> simplesmente não faz nada — mas ao customizar botão de voltar, cheque <code>Navigator.canPop(context)</code> antes."
     },
     {
       tema: "TextEditingController",
       pergunta: "Por que é obrigatório chamar <code>controller.dispose()</code> no <code>dispose()</code> do <code>State</code> ao usar um <code>TextEditingController</code>?",
       opcoes: [
-        "Porque, sem isso, o app não compila.",
-        "Porque ele é um <code>ChangeNotifier</code> que mantém listeners ativos; não descartá-lo causa memory leak, já que continua \"vivo\" mesmo após a tela ser destruída.",
-        "Porque <code>dispose()</code> é quem realmente inicializa o controller.",
-        "Porque isso limpa automaticamente o texto digitado antes de enviar o pedido."
+        "Sem isso o app não compila em modo release.",
+        "Ele é um <code>ChangeNotifier</code> com listeners ativos; não descartar causa memory leak.",
+        "O <code>dispose()</code> é quem de fato inicializa o controller.",
+        "Serve para limpar o texto digitado antes do envio do pedido."
       ],
       correta: 1,
-      explicacao: "Evita memory leak, pois o controller é um <code>ChangeNotifier</code>."
+      explicacao: "O controller continua \"vivo\" segurando recursos mesmo após a tela morrer — vazamento de memória clássico."
     },
     {
       tema: "TextEditingController",
       pergunta: "O que acontece se você tentar usar <code>meuController.text</code> <b>depois</b> de já ter chamado <code>meuController.dispose()</code>?",
       opcoes: [
-        "Retorna uma string vazia silenciosamente.",
-        "Lança uma exceção, pois o controller já foi destruído e não deve mais ser utilizado.",
-        "Retorna o último valor salvo em cache automaticamente.",
-        "O Flutter recria o controller automaticamente."
+        "Retorna uma string vazia silenciosamente, sem nenhum aviso.",
+        "Lança exceção: o controller destruído não deve mais ser usado.",
+        "Retorna o último valor mantido em cache pelo framework.",
+        "O Flutter recria o controller automaticamente sob demanda."
       ],
       correta: 1,
-      explicacao: "Uso pós-<code>dispose()</code> lança exceção."
+      explicacao: "Objeto descartado é objeto morto — qualquer uso posterior lança exceção."
     },
     {
       tema: "Validação",
       pergunta: "Na validação do pedido (nome e produto obrigatórios), qual abordagem é <b>mais robusta</b> que apenas <code>if (nome.isEmpty || produto.isEmpty)</code>?",
       opcoes: [
-        "Não existe abordagem melhor, o <code>if</code> simples já é o ideal em qualquer caso.",
-        "Usar <code>Form</code> com <code>GlobalKey&lt;FormState&gt;</code> e <code>TextFormField</code> com <code>validator</code>, chamando <code>validate()</code>: centraliza a validação, mostra erro visual em cada campo e escala melhor.",
-        "Usar <code>try/catch</code> ao redor do <code>Scaffold</code>.",
-        "Validar apenas no backend, nunca no app."
+        "Não existe abordagem melhor; o <code>if</code> simples já é o ideal.",
+        "<code>Form</code> com <code>GlobalKey&lt;FormState&gt;</code> e <code>validator</code> nos <code>TextFormField</code>.",
+        "Um <code>try/catch</code> envolvendo o <code>Scaffold</code> para capturar campos vazios.",
+        "Validar somente no backend, nunca dentro do aplicativo."
       ],
       correta: 1,
-      explicacao: "<code>Form</code> + <code>validator</code> é mais escalável e visual."
+      explicacao: "Chamar <code>formKey.currentState!.validate()</code> centraliza a validação, mostra erro visual em cada campo e escala pra quantos campos precisar."
     },
     {
       tema: "SnackBar",
       pergunta: "Qual é a forma <b>recomendada atualmente</b> de exibir um <code>SnackBar</code>, evitando o erro <i>\"Scaffold.of() called with a context that does not contain a Scaffold\"</i>?",
       opcoes: [
-        "<code>Scaffold.of(context).showSnackBar(...)</code>, a única forma válida em qualquer versão do Flutter.",
-        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))</code>, pois o <code>ScaffoldMessenger</code> gerencia a fila de SnackBars independente da posição do <code>Scaffold</code> na árvore.",
-        "<code>Navigator.of(context).showSnackBar(...)</code>.",
-        "SnackBars não podem ser reutilizados entre telas diferentes."
+        "<code>Scaffold.of(context).showSnackBar(...)</code>, válido em qualquer versão.",
+        "<code>ScaffoldMessenger.of(context).showSnackBar(...)</code>, com fila independente do <code>Scaffold</code>.",
+        "<code>Navigator.of(context).showSnackBar(...)</code>, pois SnackBar é uma rota.",
+        "Instanciar o <code>SnackBar</code> direto no <code>body</code>, que o exibe sozinho."
       ],
       correta: 1,
-      explicacao: "<code>ScaffoldMessenger</code> é a forma recomendada atualmente."
+      explicacao: "O <code>ScaffoldMessenger</code> gerencia SnackBars sem depender da posição exata do <code>Scaffold</code> na árvore — o método antigo via <code>Scaffold.of</code> foi descontinuado."
     },
     {
       tema: "SnackBar",
       pergunta: "Se dois <code>SnackBar</code>s forem disparados em sequência muito rápida, qual é o comportamento padrão do <code>ScaffoldMessenger</code>?",
       opcoes: [
-        "Ambos aparecem sobrepostos ao mesmo tempo.",
-        "O segundo entra em fila e é exibido após o primeiro terminar (ou você chama <code>hideCurrentSnackBar()</code> / <code>removeCurrentSnackBar()</code> antes de mostrar o novo).",
-        "O app trava.",
-        "Apenas o primeiro é exibido, o segundo é descartado silenciosamente."
+        "Os dois aparecem sobrepostos na tela ao mesmo tempo.",
+        "O segundo entra em fila e aparece quando o primeiro terminar.",
+        "O app lança uma exceção de SnackBar duplicado.",
+        "O segundo é descartado silenciosamente pelo framework."
       ],
       correta: 1,
-      explicacao: "SnackBars entram em fila por padrão."
+      explicacao: "Fila por padrão. Pra pular a espera: <code>hideCurrentSnackBar()</code> ou <code>removeCurrentSnackBar()</code> antes de mostrar o novo."
     },
     {
       tema: "showModalBottomSheet",
       pergunta: "Sobre <code>showModalBottomSheet</code>, qual afirmação é verdadeira?",
       opcoes: [
-        "Ele bloqueia toda a navegação do app até o dispositivo ser reiniciado.",
-        "Por padrão é modal (bloqueia interação com o conteúdo atrás até ser fechado) e retorna um <code>Future</code>, permitindo capturar um valor via <code>Navigator.pop(context, valor)</code> dentro dele.",
-        "Ele nunca pode conter widgets com estado próprio (<code>StatefulWidget</code>).",
+        "Ele bloqueia toda a navegação até o aplicativo ser reiniciado.",
+        "É modal por padrão e retorna um <code>Future</code> resolvido pelo <code>pop</code>.",
+        "Não pode conter widgets com estado próprio (<code>StatefulWidget</code>).",
         "Ele substitui totalmente o <code>Scaffold</code> da tela atual."
       ],
       correta: 1,
-      explicacao: "É modal e retorna <code>Future</code> via <code>pop</code>."
+      explicacao: "Bloqueia interação com o conteúdo atrás até fechar, e <code>Navigator.pop(context, valor)</code> dentro dele resolve o <code>Future</code> com esse valor."
     },
     {
       tema: "AnimatedContainer",
       pergunta: "Por que, ao usar <code>AnimatedContainer</code>, é indispensável definir a propriedade <code>duration</code>?",
       opcoes: [
-        "Porque sem <code>duration</code> o container não pode ter cor.",
-        "Porque ele é um widget de animação implícita: interpola automaticamente as mudanças de propriedades (tamanho, cor, borda, padding) ao longo do tempo definido em <code>duration</code>; sem ela, o Flutter não sabe quanto tempo a transição deve durar.",
-        "<code>duration</code> é opcional e só afeta a cor de fundo.",
-        "<code>duration</code> define quantas vezes o setState pode ser chamado."
+        "Sem <code>duration</code> o container não pode receber cor de fundo.",
+        "É animação implícita: <code>duration</code> define o tempo da interpolação.",
+        "<code>duration</code> é opcional e afeta apenas a cor de fundo.",
+        "<code>duration</code> limita quantas vezes o <code>setState</code> pode ser chamado."
       ],
       correta: 1,
-      explicacao: "<code>duration</code> é essencial para animações implícitas."
+      explicacao: "Ele interpola automaticamente as mudanças de tamanho, cor, borda e padding — mas precisa saber em quanto tempo a transição deve acontecer."
     },
     {
       tema: "AnimatedContainer",
       pergunta: "O que diferencia <code>AnimatedContainer</code> de simplesmente usar um <code>Container</code> normal dentro de um <code>setState</code>?",
       opcoes: [
-        "Não há diferença nenhuma entre os dois.",
-        "Com <code>Container</code> + <code>setState</code>, a mudança acontece instantaneamente entre frames; com <code>AnimatedContainer</code>, o Flutter anima a transição entre o valor antigo e o novo usando uma <code>curve</code> de interpolação.",
-        "<code>AnimatedContainer</code> não aceita <code>BoxDecoration</code>.",
-        "<code>Container</code> sempre anima, <code>AnimatedContainer</code> nunca anima."
+        "Não há diferença nenhuma entre os dois na prática.",
+        "<code>Container</code> muda instantaneamente; <code>AnimatedContainer</code> interpola com <code>curve</code>.",
+        "<code>AnimatedContainer</code> não aceita <code>BoxDecoration</code> nem bordas.",
+        "<code>Container</code> sempre anima; <code>AnimatedContainer</code> exige controller manual."
       ],
       correta: 1,
-      explicacao: "<code>AnimatedContainer</code> interpola, <code>Container</code> muda instantaneamente."
+      explicacao: "Com <code>Container</code> + <code>setState</code> a mudança salta entre frames; o <code>AnimatedContainer</code> anima a transição do valor antigo pro novo."
     },
     {
       tema: "Column × ListView",
       pergunta: "Qual é a principal diferença de comportamento (e performance) entre <code>Column</code> dentro de <code>SingleChildScrollView</code> e um <code>ListView</code> para exibir os 4+ produtos do cardápio?",
       opcoes: [
-        "São idênticos em todos os aspectos, inclusive de performance.",
-        "<code>Column</code>/<code>SingleChildScrollView</code> constrói <b>todos</b> os filhos de uma vez, visíveis ou não; <code>ListView.builder</code> constrói os itens <b>sob demanda</b> (lazy loading), muito mais eficiente para listas longas.",
-        "<code>ListView</code> não pode ser rolado, apenas <code>Column</code> pode.",
-        "<code>SingleChildScrollView</code> é mais rápido que <code>ListView</code> para qualquer quantidade de itens."
+        "São idênticos em comportamento e em performance.",
+        "<code>Column</code> constrói tudo de uma vez; <code>ListView.builder</code> constrói sob demanda.",
+        "<code>ListView</code> não pode ser rolado; apenas <code>Column</code> pode.",
+        "<code>SingleChildScrollView</code> é mais rápido para qualquer quantidade de itens."
       ],
       correta: 1,
-      explicacao: "<code>ListView.builder</code> é lazy; <code>Column</code>/<code>SingleChildScrollView</code> constrói tudo de uma vez."
+      explicacao: "O lazy loading do <code>ListView.builder</code> só constrói o que está visível — decisivo em listas longas. Com 4 itens tanto faz; com 400, não."
     },
     {
       tema: "Arquitetura",
       pergunta: "Um colega colocou toda a lógica da tela num único <code>main.dart</code> com 2000+ linhas, sem widgets personalizados. Qual é o <b>principal problema técnico</b> (além de legibilidade)?",
       opcoes: [
-        "O app não compila com mais de 500 linhas.",
-        "Widgets monolíticos reconstroem blocos inteiros de UI a cada <code>setState</code>, pois o Flutter reconstrói toda a subárvore do <code>build()</code>; separar em widgets menores (como <code>CardProduto</code>) isola rebuilds e permite reutilizar código.",
-        "Arquivos <code>.dart</code> têm limite técnico de 2000 linhas imposto pelo compilador.",
-        "Não há nenhum problema técnico real, é só estética."
+        "O app não compila com mais de 500 linhas por arquivo.",
+        "Widgets monolíticos reconstroem blocos inteiros a cada <code>setState</code>.",
+        "Arquivos <code>.dart</code> têm limite técnico de linhas imposto pelo compilador.",
+        "Não há problema técnico real; é apenas uma questão estética."
       ],
       correta: 1,
-      explicacao: "Widgets monolíticos causam rebuilds maiores e desnecessários."
+      explicacao: "O Flutter reconstrói toda a subárvore do <code>build()</code> do widget que chamou <code>setState</code> — separar em widgets menores (como <code>CardProduto</code>) isola rebuilds e permite reutilizar código."
     }
   ];
 

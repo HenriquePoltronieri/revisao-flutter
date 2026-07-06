@@ -1,115 +1,257 @@
-Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express". Um detalhe: no documento original quase todas as respostas eram a letra **b**, o que entregaria o gabarito — então as opções são embaralhadas a cada questão, mantendo o conteúdo intacto:
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz — Revisão Flutter "Lanchonete Express"</title>
+<title>Quiz Flutter — Lanchonete Express</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #09090b;
+    --card: #131316;
+    --card2: #1a1a1f;
+    --border: #26262c;
+    --texto: #e4e4e7;
+    --dim: #8b8b93;
+    --verde: #22c55e;
+    --verde-soft: rgba(34, 197, 94, 0.12);
+    --vermelho: #ef4444;
+    --vermelho-soft: rgba(239, 68, 68, 0.12);
+    --azul: #60a5fa;
+    --amarelo: #fbbf24;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: #0d0d0f;
-    color: #e4e4e7;
-    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    background-image: radial-gradient(circle at 50% -20%, rgba(34,197,94,0.07), transparent 60%);
+    color: var(--texto);
+    font-family: 'JetBrains Mono', monospace;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 40px 16px;
+    padding: 32px 16px;
   }
-  .container { width: 100%; max-width: 720px; }
-  h1 { font-size: 1.3rem; color: #4ade80; margin-bottom: 4px; }
-  .subtitulo { color: #71717a; font-size: 0.85rem; margin-bottom: 24px; }
-  .progresso { font-size: 0.8rem; color: #71717a; margin-bottom: 12px; }
+  .app { width: 100%; max-width: 760px; }
+
+  /* ---------- barra de progresso ---------- */
+  .barra-wrap {
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .barra {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--verde), #86efac);
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+  .topo .placar { color: var(--verde); font-weight: 600; }
+
+  /* ---------- card ---------- */
   .card {
-    background: #17171b;
-    border: 1px solid #27272a;
-    border-radius: 8px;
-    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    animation: entrar 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .tema {
-    display: inline-block;
+  @keyframes entrar {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- tela inicial ---------- */
+  .hero h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; }
+  .hero h1 span { color: var(--verde); }
+  .hero .desc { color: var(--dim); font-size: 0.85rem; margin: 14px 0 20px; line-height: 1.6; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .chip {
     font-size: 0.7rem;
-    color: #4ade80;
-    border: 1px solid #4ade8055;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 12px;
+    color: var(--dim);
+    background: var(--card2);
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 99px;
   }
-  .pergunta { font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
-  .pergunta code, .opcao code {
-    background: #26262c;
-    padding: 1px 5px;
-    border-radius: 4px;
-    color: #7dd3fc;
+
+  /* ---------- questão ---------- */
+  .tema {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--verde);
+    background: var(--verde-soft);
+    border: 1px solid rgba(34,197,94,0.3);
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 16px;
+  }
+  .pergunta { font-size: 0.95rem; line-height: 1.65; margin-bottom: 22px; }
+  .pergunta b { color: var(--amarelo); }
+  code {
+    background: #202027;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: var(--azul);
     font-size: 0.85em;
+    font-family: inherit;
   }
   pre {
-    background: #101013;
-    border: 1px solid #26262c;
-    border-radius: 6px;
-    padding: 12px;
-    margin: 12px 0;
+    background: #0c0c0f;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--verde);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 14px 0 4px;
     overflow-x: auto;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: #a5f3fc;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #bae6fd;
   }
+
   .opcao {
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     width: 100%;
     text-align: left;
-    background: #1f1f24;
-    border: 1px solid #2e2e34;
-    color: #e4e4e7;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    color: var(--texto);
     font-family: inherit;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    padding: 12px 14px;
-    border-radius: 6px;
-    margin-bottom: 8px;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    padding: 13px 15px;
+    border-radius: 10px;
+    margin-bottom: 9px;
     cursor: pointer;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, transform 0.1s, background 0.15s;
   }
-  .opcao:hover:not(:disabled) { border-color: #4ade80; }
-  .opcao:disabled { cursor: default; opacity: 0.85; }
-  .opcao.correta { border-color: #4ade80; background: #4ade8018; }
-  .opcao.errada { border-color: #f87171; background: #f8717118; }
+  .opcao:hover:not(:disabled) {
+    border-color: var(--verde);
+    transform: translateX(3px);
+  }
+  .opcao:disabled { cursor: default; }
+  .letra {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--dim);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-top: 1px;
+    transition: all 0.15s;
+  }
+  .opcao:hover:not(:disabled) .letra { color: var(--verde); border-color: var(--verde); }
+  .opcao.correta { border-color: var(--verde); background: var(--verde-soft); }
+  .opcao.correta .letra { background: var(--verde); border-color: var(--verde); color: #052e16; }
+  .opcao.errada { border-color: var(--vermelho); background: var(--vermelho-soft); }
+  .opcao.errada .letra { background: var(--vermelho); border-color: var(--vermelho); color: #450a0a; }
+  .opcao.apagada { opacity: 0.45; }
+
   .explicacao {
-    margin-top: 16px;
-    padding: 12px;
-    background: #1f1f24;
-    border-left: 3px solid #4ade80;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: #a1a1aa;
     display: none;
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--verde);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--dim);
+    animation: entrar 0.3s ease;
   }
+  .explicacao .tag { color: var(--verde); font-weight: 800; margin-right: 6px; }
+  .explicacao.err .tag { color: var(--vermelho); }
+  .explicacao.err { border-left-color: var(--vermelho); }
+
   .botao {
+    display: none;
     margin-top: 20px;
-    background: #4ade80;
-    color: #0d0d0f;
+    background: var(--verde);
+    color: #052e16;
     border: none;
     font-family: inherit;
-    font-weight: bold;
-    font-size: 0.9rem;
-    padding: 12px 24px;
-    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 13px 28px;
+    border-radius: 10px;
     cursor: pointer;
-    display: none;
+    transition: transform 0.1s, filter 0.15s;
   }
-  .botao:hover { background: #6ee7a0; }
+  .botao:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  .botao.mostrar { display: inline-block; animation: entrar 0.3s ease; }
+  .dica-teclado { font-size: 0.68rem; color: #55555c; margin-top: 14px; }
+
+  /* ---------- resultado ---------- */
   .resultado { text-align: center; }
-  .resultado h2 { font-size: 2.5rem; color: #4ade80; margin: 16px 0; }
-  .resultado p { color: #a1a1aa; margin-bottom: 8px; }
+  .anel {
+    width: 140px; height: 140px;
+    margin: 10px auto 18px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(closest-side, var(--card) 82%, transparent 83%),
+      conic-gradient(var(--verde) calc(var(--pct) * 1%), var(--border) 0);
+  }
+  .anel .num { font-size: 1.8rem; font-weight: 800; color: var(--verde); }
+  .anel .sub { font-size: 0.7rem; color: var(--dim); }
+  .veredito { color: var(--texto); font-size: 0.95rem; margin-bottom: 4px; font-weight: 600; }
+  .veredito-sub { color: var(--dim); font-size: 0.8rem; margin-bottom: 24px; }
+
+  .revisao { text-align: left; margin-top: 8px; }
+  .revisao h3 {
+    font-size: 0.8rem;
+    color: var(--vermelho);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .rev-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--vermelho);
+    border-radius: 8px;
+    padding: 13px 15px;
+    margin-bottom: 9px;
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+  .rev-item .q { color: var(--texto); margin-bottom: 6px; }
+  .rev-item .r { color: var(--dim); }
+  .rev-item .r b { color: var(--verde); font-weight: 600; }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>&gt; Quiz Flutter — Lanchonete Express 🍔</h1>
-  <p class="subtitulo">20 questões difíceis: Scaffold, setState, Navigator, controllers, SnackBar, animações e mais</p>
-  <p class="progresso" id="progresso"></p>
+<div class="app">
+  <div class="barra-wrap"><div class="barra" id="barra"></div></div>
+  <div class="topo">
+    <span id="contador"></span>
+    <span class="placar" id="placar"></span>
+  </div>
   <div class="card" id="card"></div>
 </div>
 
@@ -128,8 +270,8 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       explicacao: "A afirmação é falsa — o correto é usar <code>ScaffoldMessenger</code>, que independe de um <code>Scaffold</code> específico."
     },
     {
-      tema: "setState / ciclo de vida",
-      pergunta: "No trecho abaixo, o que acontece quando o botão é pressionado a primeira vez, considerando o ciclo de vida do widget?<pre>class ContadorPedidos extends StatefulWidget {\n  const ContadorPedidos({super.key});\n  @override\n  State&lt;ContadorPedidos&gt; createState() =&gt; _ContadorPedidosState();\n}\n\nclass _ContadorPedidosState extends State&lt;ContadorPedidos&gt; {\n  int total = 0;\n\n  void _incrementar() {\n    total++;\n    setState(() {});\n  }\n  ...\n}</pre>",
+      tema: "setState · ciclo de vida",
+      pergunta: "No trecho abaixo, o que acontece quando o botão é pressionado a primeira vez, considerando o ciclo de vida do widget?<pre>class _ContadorPedidosState extends State&lt;ContadorPedidos&gt; {\n  int total = 0;\n\n  void _incrementar() {\n    total++;\n    setState(() {});\n  }\n}</pre>",
       opcoes: [
         "Não compila, pois <code>setState</code> precisa obrigatoriamente receber a alteração de estado dentro do callback.",
         "Funciona normalmente: o <code>total++</code> já foi executado antes do <code>setState</code>, e o <code>setState({})</code> apenas força o <code>build()</code> a rodar novamente.",
@@ -144,7 +286,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Qual é a real função do <code>setState()</code> no Flutter?",
       opcoes: [
         "Ele persiste o novo valor da variável em um banco local automaticamente.",
-        "Ele marca o widget como \"sujo\" (dirty) e agenda a reconstrução do <code>build()</code> na próxima renderização de frame — ele <b>não</b> altera a variável por conta própria.",
+        "Ele marca o widget como \"sujo\" (dirty) e agenda a reconstrução do <code>build()</code> no próximo frame — ele <b>não</b> altera a variável por conta própria.",
         "Ele impede que o widget pai seja reconstruído, otimizando performance.",
         "Ele cria uma nova instância do <code>State</code>, descartando a anterior."
       ],
@@ -165,10 +307,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "setState + async",
-      pergunta: "Um aluno escreveu este código na tela de detalhes do produto e reclamou que o app \"trava\" com erro no console. Qual é o problema mais provável?<pre>class _DetalheProdutoState extends State&lt;DetalheProduto&gt; {\n  bool destaque = false;\n\n  void _fetchDadosAsync() async {\n    await Future.delayed(const Duration(seconds: 3));\n    setState(() { destaque = true; }); // usuário já saiu da tela\n  }\n  ...\n}</pre>",
+      pergunta: "Um aluno escreveu este código e o app \"trava\" com erro no console. Qual é o problema mais provável?<pre>void _fetchDadosAsync() async {\n  await Future.delayed(const Duration(seconds: 3));\n  setState(() { destaque = true; }); // usuário já saiu da tela\n}</pre>",
       opcoes: [
         "<code>Future.delayed</code> não existe no Flutter.",
-        "O <code>setState</code> é chamado após o widget ter sido desmontado (<code>unmounted</code>), pois o usuário navegou para outra tela antes dos 3 segundos passarem — deveria verificar <code>if (mounted)</code> antes de chamar <code>setState</code>.",
+        "O <code>setState</code> é chamado após o widget ter sido desmontado (<code>unmounted</code>), pois o usuário saiu da tela antes dos 3 segundos — deveria verificar <code>if (mounted)</code> antes.",
         "<code>async</code>/<code>await</code> não pode ser usado dentro de métodos de <code>State</code>.",
         "O erro é a falta de <code>await</code> antes do <code>setState</code>."
       ],
@@ -176,12 +318,12 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       explicacao: "Clássico erro de <code>setState() called after dispose()</code> — resolve-se checando <code>mounted</code>."
     },
     {
-      tema: "Stateless x Stateful",
+      tema: "Stateless × Stateful",
       pergunta: "Sobre a diferença entre <code>StatelessWidget</code> e <code>StatefulWidget</code>, marque a alternativa <b>mais precisa</b>:",
       opcoes: [
         "<code>StatelessWidget</code> nunca pode receber parâmetros no construtor.",
-        "A imutabilidade de um <code>StatelessWidget</code> refere-se ao próprio objeto widget; internamente ele pode, sim, disparar rebuilds do pai ao chamar callbacks (como <code>VoidCallback aoClicar</code>), mas não guarda estado mutável interno via <code>State</code>.",
-        "<code>StatefulWidget</code> é sempre mais lento que <code>StatelessWidget</code>, então deve ser evitado sempre que possível.",
+        "A imutabilidade do <code>StatelessWidget</code> é do próprio objeto widget; ele pode disparar rebuilds do pai via callbacks (como <code>VoidCallback aoClicar</code>), mas não guarda estado mutável interno via <code>State</code>.",
+        "<code>StatefulWidget</code> é sempre mais lento, então deve ser evitado sempre que possível.",
         "Um <code>StatelessWidget</code> não pode conter um <code>StatefulWidget</code> como filho."
       ],
       correta: 1,
@@ -189,10 +331,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "Widgets personalizados",
-      pergunta: "No <code>CardProduto</code> da atividade, por que é uma boa prática declarar o construtor como <code>const CardProduto({super.key, required this.nome, ...})</code> sempre que possível?",
+      pergunta: "No <code>CardProduto</code>, por que é boa prática declarar o construtor como <code>const CardProduto({super.key, required this.nome, ...})</code> sempre que possível?",
       opcoes: [
         "Porque <code>const</code> é obrigatório em qualquer widget personalizado.",
-        "Porque construtores <code>const</code> permitem ao Flutter reutilizar a mesma instância do widget entre rebuilds quando os parâmetros não mudam, evitando reconstruções desnecessárias e melhorando a performance.",
+        "Porque construtores <code>const</code> permitem ao Flutter reutilizar a mesma instância entre rebuilds quando os parâmetros não mudam, evitando reconstruções desnecessárias.",
         "Porque sem <code>const</code> o widget não aparece na tela.",
         "Porque <code>const</code> transforma automaticamente o widget em <code>StatefulWidget</code>."
       ],
@@ -204,7 +346,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Qual é a diferença fundamental entre <code>Navigator.push</code> e <code>Navigator.pushReplacement</code>?",
       opcoes: [
         "Não há diferença; são sinônimos.",
-        "<code>push</code> empilha a nova rota sobre a atual, mantendo a anterior na pilha (permitindo voltar); <code>pushReplacement</code> substitui a rota atual pela nova, removendo a anterior da pilha (não é possível voltar para ela).",
+        "<code>push</code> empilha a nova rota mantendo a anterior na pilha (dá pra voltar); <code>pushReplacement</code> substitui a rota atual, removendo a anterior (não dá pra voltar).",
         "<code>pushReplacement</code> só funciona com rotas nomeadas.",
         "<code>push</code> não aceita passagem de dados, enquanto <code>pushReplacement</code> aceita."
       ],
@@ -216,7 +358,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Como capturar um valor retornado pela tela de detalhes quando o usuário volta usando <code>Navigator.pop(context, valor)</code>?",
       opcoes: [
         "Isso não é possível em Flutter, <code>pop</code> nunca retorna dados.",
-        "Usando <code>await</code> no <code>Navigator.push</code>: <code>final resultado = await Navigator.push(...)</code>, pois <code>push</code> retorna um <code>Future</code> que é resolvido com o valor passado ao <code>pop</code>.",
+        "Usando <code>await</code> no push: <code>final resultado = await Navigator.push(...)</code>, pois <code>push</code> retorna um <code>Future</code> resolvido com o valor passado ao <code>pop</code>.",
         "Usando uma variável <code>global</code> obrigatoriamente.",
         "O valor só pode ser recuperado através de <code>SharedPreferences</code>."
       ],
@@ -225,10 +367,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "Navigator",
-      pergunta: "Sobre <code>Navigator.pop(context)</code> chamado sem nenhuma tela para voltar (ou seja, na rota raiz da aplicação):",
+      pergunta: "Sobre <code>Navigator.pop(context)</code> chamado sem nenhuma tela para voltar (na rota raiz da aplicação):",
       opcoes: [
         "Fecha a rota raiz normalmente e o app continua rodando em segundo plano.",
-        "Não tem efeito nenhum e não gera erro — mas boas práticas recomendam checar <code>Navigator.canPop(context)</code> antes, especialmente ao customizar o botão de voltar.",
+        "Não tem efeito e não gera erro — mas é boa prática checar <code>Navigator.canPop(context)</code> antes, especialmente ao customizar o botão de voltar.",
         "Gera automaticamente um <code>showModalBottomSheet</code> de confirmação.",
         "Fecha o aplicativo imediatamente em qualquer plataforma."
       ],
@@ -237,10 +379,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "TextEditingController",
-      pergunta: "Por que é obrigatório chamar <code>controller.dispose()</code> no método <code>dispose()</code> do <code>State</code> ao usar um <code>TextEditingController</code>?",
+      pergunta: "Por que é obrigatório chamar <code>controller.dispose()</code> no <code>dispose()</code> do <code>State</code> ao usar um <code>TextEditingController</code>?",
       opcoes: [
         "Porque, sem isso, o app não compila.",
-        "Porque o <code>TextEditingController</code> é um <code>ChangeNotifier</code> que mantém listeners e recursos ativos; não descartá-lo causa vazamento de memória (memory leak), já que ele continua \"vivo\" mesmo após a tela ser destruída.",
+        "Porque ele é um <code>ChangeNotifier</code> que mantém listeners ativos; não descartá-lo causa memory leak, já que continua \"vivo\" mesmo após a tela ser destruída.",
         "Porque <code>dispose()</code> é quem realmente inicializa o controller.",
         "Porque isso limpa automaticamente o texto digitado antes de enviar o pedido."
       ],
@@ -264,7 +406,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Na validação do pedido (nome e produto obrigatórios), qual abordagem é <b>mais robusta</b> que apenas <code>if (nome.isEmpty || produto.isEmpty)</code>?",
       opcoes: [
         "Não existe abordagem melhor, o <code>if</code> simples já é o ideal em qualquer caso.",
-        "Usar um <code>Form</code> com <code>GlobalKey&lt;FormState&gt;</code> e <code>TextFormField</code> com <code>validator</code>, chamando <code>formKey.currentState!.validate()</code>, pois isso centraliza a validação, exibe mensagens de erro visuais em cada campo e é mais escalável para múltiplos campos.",
+        "Usar <code>Form</code> com <code>GlobalKey&lt;FormState&gt;</code> e <code>TextFormField</code> com <code>validator</code>, chamando <code>validate()</code>: centraliza a validação, mostra erro visual em cada campo e escala melhor.",
         "Usar <code>try/catch</code> ao redor do <code>Scaffold</code>.",
         "Validar apenas no backend, nunca no app."
       ],
@@ -273,10 +415,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "SnackBar",
-      pergunta: "Qual é a forma <b>correta e recomendada atualmente</b> de exibir um <code>SnackBar</code> a partir de qualquer lugar da tela, evitando o erro <i>\"Scaffold.of() called with a context that does not contain a Scaffold\"</i>?",
+      pergunta: "Qual é a forma <b>recomendada atualmente</b> de exibir um <code>SnackBar</code>, evitando o erro <i>\"Scaffold.of() called with a context that does not contain a Scaffold\"</i>?",
       opcoes: [
-        "<code>Scaffold.of(context).showSnackBar(...)</code>, que é a única forma válida em qualquer versão do Flutter.",
-        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))</code>, pois o <code>ScaffoldMessenger</code> gerencia a fila de SnackBars de forma independente da posição exata do <code>Scaffold</code> na árvore.",
+        "<code>Scaffold.of(context).showSnackBar(...)</code>, a única forma válida em qualquer versão do Flutter.",
+        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))</code>, pois o <code>ScaffoldMessenger</code> gerencia a fila de SnackBars independente da posição do <code>Scaffold</code> na árvore.",
         "<code>Navigator.of(context).showSnackBar(...)</code>.",
         "SnackBars não podem ser reutilizados entre telas diferentes."
       ],
@@ -285,10 +427,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "SnackBar",
-      pergunta: "Se dois <code>SnackBar</code>s forem disparados em sequência muito rápida (ex.: erro de validação seguido de sucesso, por engano de lógica), qual é o comportamento padrão do <code>ScaffoldMessenger</code>?",
+      pergunta: "Se dois <code>SnackBar</code>s forem disparados em sequência muito rápida, qual é o comportamento padrão do <code>ScaffoldMessenger</code>?",
       opcoes: [
         "Ambos aparecem sobrepostos ao mesmo tempo.",
-        "O segundo <code>SnackBar</code> entra em uma fila e é exibido após o primeiro terminar (ou você pode chamar <code>hideCurrentSnackBar()</code> / <code>removeCurrentSnackBar()</code> antes de mostrar o novo).",
+        "O segundo entra em fila e é exibido após o primeiro terminar (ou você chama <code>hideCurrentSnackBar()</code> / <code>removeCurrentSnackBar()</code> antes de mostrar o novo).",
         "O app trava.",
         "Apenas o primeiro é exibido, o segundo é descartado silenciosamente."
       ],
@@ -300,7 +442,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Sobre <code>showModalBottomSheet</code>, qual afirmação é verdadeira?",
       opcoes: [
         "Ele bloqueia toda a navegação do app até o dispositivo ser reiniciado.",
-        "Por padrão, <code>showModalBottomSheet</code> é modal (bloqueia interação com o conteúdo atrás dele até ser fechado) e retorna um <code>Future</code>, permitindo capturar um valor quando fechado via <code>Navigator.pop(context, valor)</code> dentro dele.",
+        "Por padrão é modal (bloqueia interação com o conteúdo atrás até ser fechado) e retorna um <code>Future</code>, permitindo capturar um valor via <code>Navigator.pop(context, valor)</code> dentro dele.",
         "Ele nunca pode conter widgets com estado próprio (<code>StatefulWidget</code>).",
         "Ele substitui totalmente o <code>Scaffold</code> da tela atual."
       ],
@@ -312,7 +454,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "Por que, ao usar <code>AnimatedContainer</code>, é indispensável definir a propriedade <code>duration</code>?",
       opcoes: [
         "Porque sem <code>duration</code> o container não pode ter cor.",
-        "Porque <code>AnimatedContainer</code> é um widget de animação implícita: ele interpola automaticamente as mudanças de suas propriedades (tamanho, cor, borda, padding) ao longo do tempo definido em <code>duration</code>; sem ela, o Flutter não sabe quanto tempo a transição deve durar.",
+        "Porque ele é um widget de animação implícita: interpola automaticamente as mudanças de propriedades (tamanho, cor, borda, padding) ao longo do tempo definido em <code>duration</code>; sem ela, o Flutter não sabe quanto tempo a transição deve durar.",
         "<code>duration</code> é opcional e só afeta a cor de fundo.",
         "<code>duration</code> define quantas vezes o setState pode ser chamado."
       ],
@@ -324,7 +466,7 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       pergunta: "O que diferencia <code>AnimatedContainer</code> de simplesmente usar um <code>Container</code> normal dentro de um <code>setState</code>?",
       opcoes: [
         "Não há diferença nenhuma entre os dois.",
-        "Com <code>Container</code> normal + <code>setState</code>, a mudança de propriedades (ex.: tamanho, cor) acontece instantaneamente entre frames; com <code>AnimatedContainer</code>, o Flutter anima automaticamente a transição entre o valor antigo e o novo, usando uma <code>curve</code> de interpolação.",
+        "Com <code>Container</code> + <code>setState</code>, a mudança acontece instantaneamente entre frames; com <code>AnimatedContainer</code>, o Flutter anima a transição entre o valor antigo e o novo usando uma <code>curve</code> de interpolação.",
         "<code>AnimatedContainer</code> não aceita <code>BoxDecoration</code>.",
         "<code>Container</code> sempre anima, <code>AnimatedContainer</code> nunca anima."
       ],
@@ -332,11 +474,11 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
       explicacao: "<code>AnimatedContainer</code> interpola, <code>Container</code> muda instantaneamente."
     },
     {
-      tema: "Column x ListView",
-      pergunta: "Qual é a principal diferença de comportamento (e de performance) entre <code>Column</code> dentro de <code>SingleChildScrollView</code> e um <code>ListView</code> para exibir os 4+ produtos do cardápio?",
+      tema: "Column × ListView",
+      pergunta: "Qual é a principal diferença de comportamento (e performance) entre <code>Column</code> dentro de <code>SingleChildScrollView</code> e um <code>ListView</code> para exibir os 4+ produtos do cardápio?",
       opcoes: [
         "São idênticos em todos os aspectos, inclusive de performance.",
-        "<code>Column</code>/<code>SingleChildScrollView</code> constrói <b>todos</b> os widgets filhos de uma vez, independentemente de estarem visíveis na tela; <code>ListView</code> (via <code>ListView.builder</code>) constrói os itens <b>sob demanda</b> (lazy loading), sendo muito mais eficiente para listas longas.",
+        "<code>Column</code>/<code>SingleChildScrollView</code> constrói <b>todos</b> os filhos de uma vez, visíveis ou não; <code>ListView.builder</code> constrói os itens <b>sob demanda</b> (lazy loading), muito mais eficiente para listas longas.",
         "<code>ListView</code> não pode ser rolado, apenas <code>Column</code> pode.",
         "<code>SingleChildScrollView</code> é mais rápido que <code>ListView</code> para qualquer quantidade de itens."
       ],
@@ -345,10 +487,10 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     },
     {
       tema: "Arquitetura",
-      pergunta: "Um colega decidiu colocar toda a lógica da tela (build, chamadas de API, validações, controllers) dentro de um único arquivo <code>main.dart</code> com mais de 2000 linhas, sem nenhum widget personalizado. Do ponto de vista de arquitetura, qual é o <b>principal problema técnico</b> dessa abordagem (além de legibilidade)?",
+      pergunta: "Um colega colocou toda a lógica da tela num único <code>main.dart</code> com 2000+ linhas, sem widgets personalizados. Qual é o <b>principal problema técnico</b> (além de legibilidade)?",
       opcoes: [
         "O app não compila com mais de 500 linhas.",
-        "Widgets grandes e monolíticos tendem a reconstruir (rebuild) blocos inteiros de UI desnecessariamente a cada <code>setState</code>, já que o Flutter reconstrói toda a subárvore do <code>build()</code> daquele widget; separar em widgets menores (como <code>CardProduto</code>) permite isolar rebuilds e reutilizar código.",
+        "Widgets monolíticos reconstroem blocos inteiros de UI a cada <code>setState</code>, pois o Flutter reconstrói toda a subárvore do <code>build()</code>; separar em widgets menores (como <code>CardProduto</code>) isola rebuilds e permite reutilizar código.",
         "Arquivos <code>.dart</code> têm limite técnico de 2000 linhas imposto pelo compilador.",
         "Não há nenhum problema técnico real, é só estética."
       ],
@@ -357,12 +499,19 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     }
   ];
 
+  const temas = ["Scaffold", "setState", "Navigator", "Controllers", "Validação", "SnackBar", "BottomSheet", "AnimatedContainer", "ListView", "Arquitetura"];
+
   let atual = 0;
   let acertos = 0;
   let ordemAtual = [];
+  let respondida = false;
+  let erros = [];
+  let iniciado = false;
 
   const card = document.getElementById("card");
-  const progresso = document.getElementById("progresso");
+  const barra = document.getElementById("barra");
+  const contador = document.getElementById("contador");
+  const placar = document.getElementById("placar");
 
   function embaralhar(n) {
     const arr = [...Array(n).keys()];
@@ -373,77 +522,133 @@ Pronto, troquei o conteúdo para as 20 questões da revisão "Lanchonete Express
     return arr;
   }
 
+  function telaInicial() {
+    barra.style.width = "0%";
+    contador.textContent = "";
+    placar.textContent = "";
+    card.innerHTML = `
+      <div class="hero">
+        <h1>&gt; Quiz Flutter<br><span>Lanchonete Express 🍔</span></h1>
+        <p class="desc">20 questões difíceis pra testar o grupo. Feedback e explicação na hora, questões erradas listadas no final pra revisar. As alternativas embaralham a cada tentativa.</p>
+        <div class="chips">${temas.map(t => `<span class="chip">${t}</span>`).join("")}</div>
+        <button class="botao mostrar" onclick="iniciar()">Começar →</button>
+        <p class="dica-teclado">atalhos: 1–4 pra responder · Enter pra avançar</p>
+      </div>
+    `;
+  }
+
+  function iniciar() {
+    iniciado = true;
+    atual = 0;
+    acertos = 0;
+    erros = [];
+    mostrarQuestao();
+  }
+
   function mostrarQuestao() {
     const q = questoes[atual];
+    respondida = false;
     ordemAtual = embaralhar(q.opcoes.length);
-    progresso.textContent = `Questão ${atual + 1} de ${questoes.length} | Acertos: ${acertos}`;
+    barra.style.width = `${(atual / questoes.length) * 100}%`;
+    contador.textContent = `questão ${String(atual + 1).padStart(2, "0")} / ${questoes.length}`;
+    placar.textContent = `${acertos} acerto${acertos === 1 ? "" : "s"}`;
     card.innerHTML = `
-      <span class="tema">${q.tema}</span>
+      <span class="tema">◆ ${q.tema}</span>
       <div class="pergunta">${q.pergunta}</div>
-      ${ordemAtual.map((idxOriginal, pos) =>
-        `<button class="opcao" onclick="responder(${idxOriginal})">${String.fromCharCode(97 + pos)}) ${q.opcoes[idxOriginal]}</button>`
-      ).join("")}
-      <div class="explicacao" id="explicacao">${q.explicacao}</div>
+      ${ordemAtual.map((idxOriginal, pos) => `
+        <button class="opcao" data-pos="${pos}" onclick="responder(${idxOriginal})">
+          <span class="letra">${String.fromCharCode(65 + pos)}</span>
+          <span>${q.opcoes[idxOriginal]}</span>
+        </button>`).join("")}
+      <div class="explicacao" id="explicacao"></div>
       <button class="botao" id="proxima" onclick="proxima()">Próxima →</button>
     `;
   }
 
   function responder(idxOriginal) {
+    if (respondida) return;
+    respondida = true;
     const q = questoes[atual];
     const botoes = card.querySelectorAll(".opcao");
     botoes.forEach(b => b.disabled = true);
+
     const posCorreta = ordemAtual.indexOf(q.correta);
     const posClicada = ordemAtual.indexOf(idxOriginal);
+    const acertou = idxOriginal === q.correta;
+
     botoes[posCorreta].classList.add("correta");
-    if (idxOriginal === q.correta) {
+    botoes.forEach((b, i) => {
+      if (i !== posCorreta && i !== posClicada) b.classList.add("apagada");
+    });
+
+    const exp = document.getElementById("explicacao");
+    if (acertou) {
       acertos++;
+      exp.innerHTML = `<span class="tag">✓ ACERTOU</span>${q.explicacao}`;
     } else {
       botoes[posClicada].classList.add("errada");
+      exp.classList.add("err");
+      exp.innerHTML = `<span class="tag">✗ ERROU</span>${q.explicacao}`;
+      erros.push(q);
     }
-    document.getElementById("explicacao").style.display = "block";
+    exp.style.display = "block";
+
     const btn = document.getElementById("proxima");
-    btn.style.display = "inline-block";
     if (atual === questoes.length - 1) btn.textContent = "Ver resultado →";
-    progresso.textContent = `Questão ${atual + 1} de ${questoes.length} | Acertos: ${acertos}`;
+    btn.classList.add("mostrar");
+    placar.textContent = `${acertos} acerto${acertos === 1 ? "" : "s"}`;
   }
 
   function proxima() {
     atual++;
-    if (atual < questoes.length) {
-      mostrarQuestao();
-    } else {
-      mostrarResultado();
-    }
+    if (atual < questoes.length) mostrarQuestao();
+    else mostrarResultado();
   }
 
   function mostrarResultado() {
+    barra.style.width = "100%";
+    contador.textContent = "resultado";
+    placar.textContent = "";
     const pct = Math.round((acertos / questoes.length) * 100);
-    let msg = pct >= 80 ? "Tá pronto pra prova. 🍔" : pct >= 50 ? "Bom, mas revisa os erros." : "Refaz o quiz e revê a teoria.";
-    progresso.textContent = "";
+    let veredito, sub;
+    if (pct >= 90)      { veredito = "Monstro. 🏆";              sub = "Pode fazer a prova de olhos fechados."; }
+    else if (pct >= 70) { veredito = "Tá pronto pra prova. 🍔";  sub = "Só dá uma olhada nos erros abaixo."; }
+    else if (pct >= 50) { veredito = "Na média, mas dá pra mais."; sub = "Revisa os tópicos das questões erradas."; }
+    else                { veredito = "Volta pra teoria. 📚";      sub = "Refaz o quiz depois de revisar — as alternativas embaralham."; }
+
     card.innerHTML = `
       <div class="resultado">
-        <p>Resultado final</p>
-        <h2>${acertos}/${questoes.length}</h2>
-        <p>${pct}% de acerto — ${msg}</p>
-        <button class="botao" style="display:inline-block" onclick="reiniciar()">Refazer quiz</button>
+        <div class="anel" style="--pct: ${pct}">
+          <span class="num">${acertos}/${questoes.length}</span>
+          <span class="sub">${pct}%</span>
+        </div>
+        <p class="veredito">${veredito}</p>
+        <p class="veredito-sub">${sub}</p>
+        <button class="botao mostrar" onclick="iniciar()">Refazer quiz ↻</button>
       </div>
+      ${erros.length ? `
+        <div class="revisao">
+          <h3>Pra revisar (${erros.length})</h3>
+          ${erros.map(q => `
+            <div class="rev-item">
+              <div class="q">◆ [${q.tema}] ${q.pergunta.split("<pre>")[0]}</div>
+              <div class="r"><b>Resposta:</b> ${q.opcoes[q.correta]}</div>
+            </div>`).join("")}
+        </div>` : ""}
     `;
   }
 
-  function reiniciar() {
-    atual = 0;
-    acertos = 0;
-    mostrarQuestao();
-  }
+  document.addEventListener("keydown", (e) => {
+    if (!iniciado) { if (e.key === "Enter") iniciar(); return; }
+    if (!respondida && ["1","2","3","4"].includes(e.key)) {
+      const pos = parseInt(e.key) - 1;
+      if (pos < ordemAtual.length) responder(ordemAtual[pos]);
+    } else if (respondida && e.key === "Enter") {
+      proxima();
+    }
+  });
 
-  mostrarQuestao();
+  telaInicial();
 </script>
 </body>
 </html>
-```
-
-O que mudou em relação à versão anterior:
-
-- As 20 questões e explicações do gabarito comentado foram mantidas fielmente, incluindo os dois trechos de código Dart (questões 2 e 5), renderizados em blocos `<pre>`.
-- As opções são embaralhadas a cada exibição (Fisher-Yates), então a letra da resposta muda a cada tentativa — sem isso, quem percebesse que "é sempre b" zeraria o quiz sem ler nada.
-- `code` inline ganhou destaque visual pra facilitar a leitura das alternativas mais técnicas.

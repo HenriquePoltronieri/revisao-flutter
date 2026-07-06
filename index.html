@@ -19,6 +19,7 @@
     --vermelho-soft: rgba(239, 68, 68, 0.12);
     --azul: #60a5fa;
     --amarelo: #fbbf24;
+    --laranja: #fb923c;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -33,7 +34,6 @@
   }
   .app { width: 100%; max-width: 760px; }
 
-  /* ---------- barra de progresso ---------- */
   .barra-wrap {
     height: 4px;
     background: var(--border);
@@ -58,7 +58,6 @@
   }
   .topo .placar { color: var(--verde); font-weight: 600; }
 
-  /* ---------- card ---------- */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -71,11 +70,10 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ---------- tela inicial ---------- */
   .hero h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; }
   .hero h1 span { color: var(--verde); }
   .hero .desc { color: var(--dim); font-size: 0.85rem; margin: 14px 0 20px; line-height: 1.6; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
   .chip {
     font-size: 0.7rem;
     color: var(--dim);
@@ -85,7 +83,31 @@
     border-radius: 99px;
   }
 
-  /* ---------- questão ---------- */
+  /* ---------- seletor de modo ---------- */
+  .modos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+  @media (max-width: 560px) { .modos { grid-template-columns: 1fr; } }
+  .modo {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--texto);
+    text-align: left;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .modo:hover { transform: translateY(-2px); }
+  .modo .m-icone { font-size: 1.3rem; display: block; margin-bottom: 8px; }
+  .modo .m-nome { font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 4px; }
+  .modo .m-desc { font-size: 0.68rem; color: var(--dim); line-height: 1.5; display: block; }
+  .modo.facil:hover   { border-color: var(--verde); }
+  .modo.facil .m-nome { color: var(--verde); }
+  .modo.medio:hover   { border-color: var(--laranja); }
+  .modo.medio .m-nome { color: var(--laranja); }
+  .modo.dificil:hover   { border-color: var(--vermelho); }
+  .modo.dificil .m-nome { color: var(--vermelho); }
+
   .tema {
     display: inline-flex;
     align-items: center;
@@ -201,9 +223,15 @@
   }
   .botao:hover { filter: brightness(1.15); transform: translateY(-1px); }
   .botao.mostrar { display: inline-block; animation: entrar 0.3s ease; }
+  .botao.secundario {
+    background: transparent;
+    color: var(--dim);
+    border: 1px solid var(--border);
+    margin-left: 8px;
+  }
+  .botao.secundario:hover { color: var(--texto); border-color: var(--dim); }
   .dica-teclado { font-size: 0.68rem; color: #55555c; margin-top: 14px; }
 
-  /* ---------- resultado ---------- */
   .resultado { text-align: center; }
   .anel {
     width: 140px; height: 140px;
@@ -256,7 +284,256 @@
 </div>
 
 <script>
-  const questoes = [
+  /* =========================== MODO FÁCIL =========================== */
+  const facil = [
+    {
+      tema: "Scaffold",
+      pergunta: "O que é o <code>Scaffold</code> no Flutter?",
+      opcoes: [
+        "Um widget que fornece a estrutura básica de uma tela Material Design, com espaços para AppBar, body, FloatingActionButton etc.",
+        "Uma função que compila o código Dart.",
+        "Um banco de dados local do Flutter.",
+        "Um pacote externo que precisa ser instalado com <code>pub add</code>."
+      ],
+      correta: 0,
+      explicacao: "O <code>Scaffold</code> é o \"esqueleto\" da tela: AppBar em cima, body no meio, FAB, Drawer etc."
+    },
+    {
+      tema: "Scaffold",
+      pergunta: "Qual propriedade do <code>Scaffold</code> define o conteúdo principal da tela?",
+      opcoes: [
+        "<code>appBar</code>",
+        "<code>body</code>",
+        "<code>home</code>",
+        "<code>child</code>"
+      ],
+      correta: 1,
+      explicacao: "O conteúdo principal vai no <code>body</code>. <code>appBar</code> é a barra do topo e <code>home</code> é do <code>MaterialApp</code>."
+    },
+    {
+      tema: "Stateless × Stateful",
+      pergunta: "Você precisa de uma tela com um contador que muda quando o usuário aperta um botão. Qual tipo de widget usar?",
+      opcoes: [
+        "<code>StatelessWidget</code>, porque é mais simples.",
+        "<code>StatefulWidget</code>, porque a tela precisa mudar de estado (o valor do contador) durante a execução.",
+        "Nenhum, contadores não existem em Flutter.",
+        "<code>Scaffold</code>, que já vem com contador embutido."
+      ],
+      correta: 1,
+      explicacao: "Se algo na tela muda com o tempo ou com interação, é <code>StatefulWidget</code>."
+    },
+    {
+      tema: "setState",
+      pergunta: "De forma simples, o que o <code>setState()</code> faz?",
+      opcoes: [
+        "Avisa o Flutter que o estado mudou, fazendo a tela ser redesenhada com os novos valores.",
+        "Salva os dados no celular permanentemente.",
+        "Fecha o aplicativo.",
+        "Cria uma nova tela."
+      ],
+      correta: 0,
+      explicacao: "<code>setState</code> = \"ei Flutter, mudei algo, redesenha a tela\"."
+    },
+    {
+      tema: "Navigator",
+      pergunta: "Qual comando abre uma nova tela no Flutter?",
+      opcoes: [
+        "<code>Navigator.push(context, MaterialPageRoute(builder: (context) =&gt; NovaTela()))</code>",
+        "<code>openScreen(NovaTela())</code>",
+        "<code>setState(NovaTela())</code>",
+        "<code>Scaffold.push(NovaTela())</code>"
+      ],
+      correta: 0,
+      explicacao: "<code>Navigator.push</code> com <code>MaterialPageRoute</code> é a forma padrão de navegar."
+    },
+    {
+      tema: "Navigator",
+      pergunta: "E para voltar para a tela anterior?",
+      opcoes: [
+        "<code>Navigator.pop(context)</code>",
+        "<code>Navigator.back(context)</code>",
+        "<code>Navigator.return(context)</code>",
+        "<code>context.close()</code>"
+      ],
+      correta: 0,
+      explicacao: "<code>pop</code> remove a tela atual da pilha e volta para a anterior."
+    },
+    {
+      tema: "TextEditingController",
+      pergunta: "Para que serve o <code>TextEditingController</code>?",
+      opcoes: [
+        "Para ler e controlar o texto digitado em um <code>TextField</code> (ex.: pegar o nome do cliente com <code>controller.text</code>).",
+        "Para controlar o volume do celular.",
+        "Para editar o código Dart em tempo de execução.",
+        "Para criar animações de texto."
+      ],
+      correta: 0,
+      explicacao: "É a ponte entre o campo de texto e o seu código: <code>meuController.text</code> retorna o que foi digitado."
+    },
+    {
+      tema: "SnackBar",
+      pergunta: "O que é um <code>SnackBar</code>?",
+      opcoes: [
+        "Uma mensagem temporária que aparece na parte de baixo da tela (ex.: \"Pedido enviado!\") e some sozinha.",
+        "Uma barra de rolagem lateral.",
+        "O menu principal do aplicativo.",
+        "Um tipo de botão flutuante."
+      ],
+      correta: 0,
+      explicacao: "SnackBar é aquele aviso rápido que sobe na base da tela e desaparece depois de alguns segundos."
+    },
+    {
+      tema: "ListView",
+      pergunta: "Qual widget é o mais indicado para exibir uma lista rolável de produtos do cardápio?",
+      opcoes: [
+        "<code>ListView</code>",
+        "<code>Text</code>",
+        "<code>AppBar</code>",
+        "<code>FloatingActionButton</code>"
+      ],
+      correta: 0,
+      explicacao: "<code>ListView</code> exibe itens em lista com rolagem automática."
+    },
+    {
+      tema: "BottomSheet",
+      pergunta: "O que o <code>showModalBottomSheet</code> faz?",
+      opcoes: [
+        "Abre um painel que desliza de baixo para cima na tela (ex.: detalhes do pedido), bloqueando o conteúdo atrás até ser fechado.",
+        "Mostra uma barra de navegação fixa no rodapé.",
+        "Reinicia o aplicativo.",
+        "Exibe uma imagem em tela cheia."
+      ],
+      correta: 0,
+      explicacao: "É aquele painel deslizante da parte de baixo, muito usado pra confirmações e detalhes."
+    }
+  ];
+
+  /* =========================== MODO MÉDIO =========================== */
+  const medio = [
+    {
+      tema: "Stateful · estrutura",
+      pergunta: "Em um <code>StatefulWidget</code>, onde as variáveis de estado (ex.: <code>int total = 0;</code>) devem ser declaradas?",
+      opcoes: [
+        "Na classe que estende <code>State</code> (ex.: <code>_MinhaTelaState</code>), pois é ela que persiste entre os rebuilds.",
+        "Na classe que estende <code>StatefulWidget</code>, pois é ela que representa a tela.",
+        "Dentro do método <code>build()</code>, para serem recriadas a cada frame.",
+        "No arquivo <code>pubspec.yaml</code>."
+      ],
+      correta: 0,
+      explicacao: "O widget é recriado a cada rebuild; o objeto <code>State</code> permanece — por isso o estado mora nele. Declarar dentro do <code>build()</code> zeraria o valor a cada redesenho."
+    },
+    {
+      tema: "setState",
+      pergunta: "Um aluno fez <code>total++;</code> no <code>onPressed</code> do botão, mas <b>sem</b> chamar <code>setState</code>. O que acontece?",
+      opcoes: [
+        "A variável <code>total</code> muda na memória, mas a tela não atualiza, pois o <code>build()</code> não é executado de novo.",
+        "O app trava com exceção.",
+        "A tela atualiza normalmente, <code>setState</code> é opcional.",
+        "O valor de <code>total</code> nem chega a mudar."
+      ],
+      correta: 0,
+      explicacao: "Sem <code>setState</code>, o Flutter não sabe que precisa redesenhar — o valor muda \"por dentro\" mas a UI fica congelada no valor antigo."
+    },
+    {
+      tema: "Navigator · dados",
+      pergunta: "Qual a forma mais comum de <b>enviar</b> dados (ex.: o produto escolhido) para a próxima tela?",
+      opcoes: [
+        "Passando pelo construtor da tela de destino: <code>MaterialPageRoute(builder: (context) =&gt; Detalhes(produto: p))</code>.",
+        "Usando <code>Navigator.pop</code> antes do <code>push</code>.",
+        "Gravando em um arquivo .txt e lendo na outra tela.",
+        "Não é possível passar dados entre telas no Flutter."
+      ],
+      correta: 0,
+      explicacao: "A tela de destino recebe os dados como parâmetro do construtor — o jeito mais direto e comum."
+    },
+    {
+      tema: "Navigator · retorno",
+      pergunta: "A tela de detalhes fecha com <code>Navigator.pop(context, \"confirmado\")</code>. O que a string <code>\"confirmado\"</code> representa?",
+      opcoes: [
+        "É o valor devolvido para a tela anterior, que pode capturá-lo com <code>await</code> no <code>Navigator.push</code>.",
+        "É o nome da rota que será fechada.",
+        "É o título da próxima tela.",
+        "Não representa nada, <code>pop</code> ignora o segundo argumento."
+      ],
+      correta: 0,
+      explicacao: "O segundo argumento do <code>pop</code> vira o resultado do <code>Future</code> retornado pelo <code>push</code>."
+    },
+    {
+      tema: "TextEditingController",
+      pergunta: "Qual é o par correto de \"onde criar\" e \"onde descartar\" um <code>TextEditingController</code>?",
+      opcoes: [
+        "Criar como atributo do <code>State</code> (ou no <code>initState</code>) e descartar no <code>dispose()</code> com <code>controller.dispose()</code>.",
+        "Criar dentro do <code>build()</code> e descartar no <code>setState()</code>.",
+        "Criar no <code>main()</code> e nunca descartar.",
+        "Criar no <code>dispose()</code> e descartar no <code>initState()</code>."
+      ],
+      correta: 0,
+      explicacao: "Criar no <code>build()</code> recria o controller a cada rebuild (e perde o texto); não descartar causa vazamento de memória."
+    },
+    {
+      tema: "SnackBar",
+      pergunta: "Complete: para exibir um SnackBar de \"Pedido enviado!\", o código correto é...",
+      opcoes: [
+        "<code>ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(\"Pedido enviado!\")))</code>",
+        "<code>SnackBar.show(context, \"Pedido enviado!\")</code>",
+        "<code>Navigator.push(context, SnackBar(...))</code>",
+        "<code>setState(() =&gt; SnackBar(\"Pedido enviado!\"))</code>"
+      ],
+      correta: 0,
+      explicacao: "SnackBar se exibe via <code>ScaffoldMessenger.of(context).showSnackBar(...)</code>."
+    },
+    {
+      tema: "Validação",
+      pergunta: "Na tela de pedido, o botão \"Enviar\" só deve funcionar se nome e produto estiverem preenchidos. Qual implementação simples resolve?",
+      opcoes: [
+        "No <code>onPressed</code>, checar <code>if (nomeController.text.isEmpty || produtoController.text.isEmpty)</code> e, se vazio, exibir um SnackBar de erro em vez de enviar.",
+        "Deixar enviar sempre e validar depois.",
+        "Usar <code>try/catch</code> ao redor do botão.",
+        "Desabilitar o teclado do usuário."
+      ],
+      correta: 0,
+      explicacao: "Checar <code>.text.isEmpty</code> dos controllers e dar feedback com SnackBar é a validação básica da atividade."
+    },
+    {
+      tema: "AnimatedContainer",
+      pergunta: "Para o card do produto crescer suavemente ao ser tocado usando <code>AnimatedContainer</code>, o que é necessário?",
+      opcoes: [
+        "Definir uma <code>duration</code> e mudar a propriedade (ex.: <code>width</code>) dentro de um <code>setState</code> — o widget anima a transição sozinho.",
+        "Apenas trocar o <code>Container</code> por <code>AnimatedContainer</code>, sem mais nada.",
+        "Criar um <code>AnimationController</code> manualmente, obrigatório em qualquer animação.",
+        "Usar <code>Navigator.push</code> para recarregar a tela."
+      ],
+      correta: 0,
+      explicacao: "<code>AnimatedContainer</code> é animação implícita: mudou a propriedade via <code>setState</code> + tem <code>duration</code>, ele interpola sozinho."
+    },
+    {
+      tema: "Layout · rolagem",
+      pergunta: "Sua <code>Column</code> com os produtos ficou maior que a tela e apareceu a faixa amarela e preta de <b>overflow</b>. Qual a solução mais direta?",
+      opcoes: [
+        "Envolver a <code>Column</code> em um <code>SingleChildScrollView</code> (ou trocar por <code>ListView</code>) para permitir rolagem.",
+        "Diminuir a fonte de todos os textos até caber.",
+        "Usar dois <code>Scaffold</code>s empilhados.",
+        "Remover o <code>SafeArea</code>."
+      ],
+      correta: 0,
+      explicacao: "Overflow em <code>Column</code> se resolve dando rolagem ao conteúdo: <code>SingleChildScrollView</code> ou <code>ListView</code>."
+    },
+    {
+      tema: "Widgets personalizados",
+      pergunta: "Na atividade, criamos o <code>CardProduto</code> como widget separado em vez de repetir o mesmo código 4 vezes. Qual a principal vantagem?",
+      opcoes: [
+        "Reutilização e organização: um único widget parametrizado (nome, preço, imagem) exibe qualquer produto, e mudanças de layout são feitas em um só lugar.",
+        "Widgets separados rodam em outra thread, dobrando a performance.",
+        "É obrigatório: o Flutter não permite repetir widgets.",
+        "Só serve pra deixar o código maior."
+      ],
+      correta: 0,
+      explicacao: "Componentizar evita duplicação: os dados variam via parâmetros e a manutenção fica centralizada."
+    }
+  ];
+
+  /* =========================== MODO DIFÍCIL =========================== */
+  const dificil = [
     {
       tema: "Scaffold",
       pergunta: "Sobre o <code>Scaffold</code>, qual afirmação está <b>incorreta</b>?",
@@ -499,8 +776,16 @@
     }
   ];
 
-  const temas = ["Scaffold", "setState", "Navigator", "Controllers", "Validação", "SnackBar", "BottomSheet", "AnimatedContainer", "ListView", "Arquitetura"];
+  const modos = {
+    facil:   { nome: "Fácil",   questoes: facil },
+    medio:   { nome: "Médio",   questoes: medio },
+    dificil: { nome: "Difícil", questoes: dificil }
+  };
 
+  const temasChips = ["Scaffold", "setState", "Navigator", "Controllers", "Validação", "SnackBar", "BottomSheet", "AnimatedContainer", "ListView", "Arquitetura"];
+
+  let modoAtual = null;
+  let questoes = [];
   let atual = 0;
   let acertos = 0;
   let ordemAtual = [];
@@ -523,21 +808,41 @@
   }
 
   function telaInicial() {
+    iniciado = false;
+    modoAtual = null;
     barra.style.width = "0%";
     contador.textContent = "";
     placar.textContent = "";
     card.innerHTML = `
       <div class="hero">
         <h1>&gt; Quiz Flutter<br><span>Lanchonete Express 🍔</span></h1>
-        <p class="desc">20 questões difíceis pra testar o grupo. Feedback e explicação na hora, questões erradas listadas no final pra revisar. As alternativas embaralham a cada tentativa.</p>
-        <div class="chips">${temas.map(t => `<span class="chip">${t}</span>`).join("")}</div>
-        <button class="botao mostrar" onclick="iniciar()">Começar →</button>
-        <p class="dica-teclado">atalhos: 1–4 pra responder · Enter pra avançar</p>
+        <p class="desc">Escolha o modo. Feedback e explicação na hora, questões erradas listadas no final. As alternativas embaralham a cada tentativa.</p>
+        <div class="chips">${temasChips.map(t => `<span class="chip">${t}</span>`).join("")}</div>
+        <div class="modos">
+          <button class="modo facil" onclick="iniciar('facil')">
+            <span class="m-icone">🟢</span>
+            <span class="m-nome">Fácil</span>
+            <span class="m-desc">10 questões · conceitos e definições básicas</span>
+          </button>
+          <button class="modo medio" onclick="iniciar('medio')">
+            <span class="m-icone">🟠</span>
+            <span class="m-nome">Médio</span>
+            <span class="m-desc">10 questões · aplicação prática no código</span>
+          </button>
+          <button class="modo dificil" onclick="iniciar('dificil')">
+            <span class="m-icone">🔴</span>
+            <span class="m-nome">Difícil</span>
+            <span class="m-desc">20 questões · ciclo de vida, performance e pegadinhas</span>
+          </button>
+        </div>
+        <p class="dica-teclado">atalhos: 1/2/3 escolhe o modo · 1–4 responde · Enter avança</p>
       </div>
     `;
   }
 
-  function iniciar() {
+  function iniciar(modo) {
+    modoAtual = modo;
+    questoes = modos[modo].questoes;
     iniciado = true;
     atual = 0;
     acertos = 0;
@@ -550,7 +855,7 @@
     respondida = false;
     ordemAtual = embaralhar(q.opcoes.length);
     barra.style.width = `${(atual / questoes.length) * 100}%`;
-    contador.textContent = `questão ${String(atual + 1).padStart(2, "0")} / ${questoes.length}`;
+    contador.textContent = `[${modos[modoAtual].nome.toLowerCase()}] questão ${String(atual + 1).padStart(2, "0")} / ${questoes.length}`;
     placar.textContent = `${acertos} acerto${acertos === 1 ? "" : "s"}`;
     card.innerHTML = `
       <span class="tema">◆ ${q.tema}</span>
@@ -607,14 +912,14 @@
 
   function mostrarResultado() {
     barra.style.width = "100%";
-    contador.textContent = "resultado";
+    contador.textContent = `[${modos[modoAtual].nome.toLowerCase()}] resultado`;
     placar.textContent = "";
     const pct = Math.round((acertos / questoes.length) * 100);
     let veredito, sub;
-    if (pct >= 90)      { veredito = "Monstro. 🏆";              sub = "Pode fazer a prova de olhos fechados."; }
-    else if (pct >= 70) { veredito = "Tá pronto pra prova. 🍔";  sub = "Só dá uma olhada nos erros abaixo."; }
+    if (pct >= 90)      { veredito = "Monstro. 🏆";                sub = modoAtual === "dificil" ? "Pode fazer a prova de olhos fechados." : "Bora subir de nível — tenta o próximo modo."; }
+    else if (pct >= 70) { veredito = "Tá pronto pra prova. 🍔";    sub = "Só dá uma olhada nos erros abaixo."; }
     else if (pct >= 50) { veredito = "Na média, mas dá pra mais."; sub = "Revisa os tópicos das questões erradas."; }
-    else                { veredito = "Volta pra teoria. 📚";      sub = "Refaz o quiz depois de revisar — as alternativas embaralham."; }
+    else                { veredito = "Volta pra teoria. 📚";       sub = "Refaz o quiz depois de revisar — as alternativas embaralham."; }
 
     card.innerHTML = `
       <div class="resultado">
@@ -624,7 +929,8 @@
         </div>
         <p class="veredito">${veredito}</p>
         <p class="veredito-sub">${sub}</p>
-        <button class="botao mostrar" onclick="iniciar()">Refazer quiz ↻</button>
+        <button class="botao mostrar" onclick="iniciar(modoAtual)">Refazer ↻</button>
+        <button class="botao secundario mostrar" onclick="telaInicial()">Trocar modo</button>
       </div>
       ${erros.length ? `
         <div class="revisao">
@@ -639,7 +945,12 @@
   }
 
   document.addEventListener("keydown", (e) => {
-    if (!iniciado) { if (e.key === "Enter") iniciar(); return; }
+    if (!iniciado) {
+      if (e.key === "1") iniciar("facil");
+      else if (e.key === "2") iniciar("medio");
+      else if (e.key === "3") iniciar("dificil");
+      return;
+    }
     if (!respondida && ["1","2","3","4"].includes(e.key)) {
       const pos = parseInt(e.key) - 1;
       if (pos < ordemAtual.length) responder(ordemAtual[pos]);
